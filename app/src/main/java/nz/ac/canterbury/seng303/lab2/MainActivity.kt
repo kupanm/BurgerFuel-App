@@ -69,6 +69,7 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                         )
+<<<<<<< HEAD
                     },
                     bottomBar = {
                         BottomAppBar(
@@ -87,6 +88,9 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                         )
+=======
+
+>>>>>>> b6b932a0f82260fb8a7469cd0004d1dc4e3b23c2
                     }
                 ) {
 
