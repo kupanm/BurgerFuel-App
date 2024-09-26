@@ -1,5 +1,8 @@
 # SENG303_Group_O
 
+## TO-do
+
+- [ ] [Splash Screen]
 
 
 ## Getting started
