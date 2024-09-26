@@ -4,7 +4,7 @@
 
 - [ ] Splash-Screen
 - [ ] Menu Navigation
-- [ ] Colour Pallete
+- [ ] Colour Palette
 - [ ] Font
 - [ ] Top Bar with current selected store and cart
 - [ ] Food Icons
