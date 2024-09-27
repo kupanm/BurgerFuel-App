@@ -65,15 +65,22 @@ class MainActivity : ComponentActivity() {
             Lab1Theme {
                 val navController = rememberNavController()
                 Scaffold(
-                    topBar = {
+                    topBar =  {
                         // Add your AppBar content here
                         TopAppBar(
-                            title = { Text("SENG303 Lab 2") },
+                            title = { Row(verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center,
+                                modifier = Modifier.scale(0.5f)) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.borgorlogo),
+                                    contentDescription = "Borgor Logo"
+                                )
+                            } },
                             navigationIcon = {
                                 IconButton(onClick = { navController.popBackStack() }) {
                                     Icon(
-                                        imageVector = Icons.Default.ArrowBack,
-                                        contentDescription = "Back"
+                                        imageVector = Icons.Default.LocationOn,
+                                        contentDescription = "Location"
                                     )
                                 }
                             }
