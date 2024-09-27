@@ -28,6 +28,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
@@ -88,36 +89,18 @@ class MainActivity : ComponentActivity() {
                     },
                     bottomBar = {
                         BottomAppBar(
-                            containerColor = Color.Transparent,
                             content = {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceEvenly
-                                ) {
-                                    IconButton(onClick = { navController.popBackStack() }) {
-                                        Icon(
-                                            imageVector = Icons.Default.Home,
-                                            contentDescription = "Home",
-                                        )
-                                    }
-                                    IconButton(onClick = { navController.popBackStack() }) {
-                                        Icon(
-                                            imageVector = Icons.Default.LocationOn,
-                                            contentDescription = "Location",
-                                        )
-                                    }
-                                    IconButton(onClick = { navController.popBackStack() }) {
-                                        Icon(
-                                            imageVector = ImageVector.vectorResource(id = R.drawable.receipt_24dp_e8eaed_fill0_wght400_grad0_opsz24),
-                                            contentDescription = "Order"
-                                        )
-                                    }
-                                    IconButton(onClick = { navController.popBackStack() }) {
-                                        Icon(
-                                            imageVector = Icons.Default.Person,
-                                            contentDescription = "Profile",
-                                        )
-                                    }
+                                IconButton(onClick = { navController.popBackStack() }) {
+                                    Icon(
+                                        imageVector = Icons.Default.Home,
+                                        contentDescription = "Home"
+                                    )
+                                }
+                                IconButton(onClick = { navController.popBackStack() }) {
+                                    Icon(
+                                        imageVector = Icons.Default.LocationOn,
+                                        contentDescription = "Location"
+                                    )
                                 }
                             }
                         )
@@ -156,12 +139,12 @@ class MainActivity : ComponentActivity() {
                             composable("CreateNote") {
                                 CreateNote(navController = navController, title = createNoteViewModel.title,
                                     onTitleChange = {newTitle ->
-                                            val title = newTitle.replace("badword", "*******")
-                                            createNoteViewModel.updateTitle(title)
+                                        val title = newTitle.replace("badword", "*******")
+                                        createNoteViewModel.updateTitle(title)
                                     },
                                     content = createNoteViewModel.content, onContentChange = {newContent -> createNoteViewModel.updateContent(newContent)},
                                     createNoteFn = {title, content -> noteViewModel.createNote(title, content)}
-                                    )
+                                )
 //                                CreateNoteStandAlone(navController = navController)
                             }
                         }
