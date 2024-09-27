@@ -43,9 +43,13 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import nz.ac.canterbury.seng303.lab2.screens.CreateNote
 import nz.ac.canterbury.seng303.lab2.screens.EditNote
+import nz.ac.canterbury.seng303.lab2.screens.ItemCart
+import nz.ac.canterbury.seng303.lab2.screens.Locations
 import nz.ac.canterbury.seng303.lab2.screens.NoteCard
 import nz.ac.canterbury.seng303.lab2.screens.NoteGrid
 import nz.ac.canterbury.seng303.lab2.screens.NoteList
+import nz.ac.canterbury.seng303.lab2.screens.PastOrders
+import nz.ac.canterbury.seng303.lab2.screens.Profile
 import nz.ac.canterbury.seng303.lab2.ui.theme.Lab1Theme
 import nz.ac.canterbury.seng303.lab2.ui.theme.Purple40
 import nz.ac.canterbury.seng303.lab2.viewmodels.CreateNoteViewModel
@@ -95,25 +99,25 @@ class MainActivity : ComponentActivity() {
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.SpaceEvenly
                                 ) {
-                                    IconButton(onClick = { navController.popBackStack() }) {
+                                    IconButton(onClick = { navController.navigate("Home") }) {
                                         Icon(
                                             imageVector = Icons.Default.Home,
                                             contentDescription = "Home",
                                         )
                                     }
-                                    IconButton(onClick = { navController.popBackStack() }) {
+                                    IconButton(onClick = { navController.navigate("Locations") }) {
                                         Icon(
                                             imageVector = Icons.Default.LocationOn,
                                             contentDescription = "Location",
                                         )
                                     }
-                                    IconButton(onClick = { navController.popBackStack() }) {
+                                    IconButton(onClick = { navController.navigate("PastOrders") }) {
                                         Icon(
                                             imageVector = ImageVector.vectorResource(id = R.drawable.receipt_24dp_e8eaed_fill0_wght400_grad0_opsz24),
-                                            contentDescription = "Order"
+                                            contentDescription = "PastOrder"
                                         )
                                     }
-                                    IconButton(onClick = { navController.popBackStack() }) {
+                                    IconButton(onClick = { navController.navigate("Profile") }) {
                                         Icon(
                                             imageVector = Icons.Default.Person,
                                             contentDescription = "Profile",
@@ -126,6 +130,27 @@ class MainActivity : ComponentActivity() {
                 ) {
 
                     Box(modifier = Modifier.padding(it)) {
+
+                        NavHost(navController = navController, startDestination = "Home") {
+                            composable("Home") {
+                                Home(navController = navController)
+                            }
+                            composable("Locations") {
+                                Locations(navController = navController)
+                            }
+                            composable("ItemCart") {
+                                ItemCart(navController = navController)
+                            }
+                            composable("Profile") {
+                                Profile(navController = navController)
+                            }
+                            composable("PastOrders") {
+                                PastOrders(navController = navController)
+                            }
+                        }
+
+                        /*
+                        //region Old Notes data
                         val createNoteViewModel: CreateNoteViewModel = viewModel()
                         val editNoteViewModel: EditNoteViewModel = viewModel()
                         NavHost(navController = navController, startDestination = "Home") {
@@ -163,9 +188,12 @@ class MainActivity : ComponentActivity() {
                                     content = createNoteViewModel.content, onContentChange = {newContent -> createNoteViewModel.updateContent(newContent)},
                                     createNoteFn = {title, content -> noteViewModel.createNote(title, content)}
                                 )
-//                                CreateNoteStandAlone(navController = navController)
+                                //CreateNoteStandAlone(navController = navController)
                             }
                         }
+                        // endregion
+
+                        */
                     }
                 }
             }
