@@ -31,6 +31,7 @@ import nz.ac.canterbury.seng303.lab2.R
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
@@ -47,7 +48,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -59,6 +62,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import nz.ac.canterbury.seng303.lab2.models.MenuItem
+import nz.ac.canterbury.seng303.lab2.models.MenuItem.Companion.getMenuItems
 import nz.ac.canterbury.seng303.lab2.screens.CreateNote
 import nz.ac.canterbury.seng303.lab2.screens.EditNote
 import nz.ac.canterbury.seng303.lab2.screens.ItemCart
@@ -223,6 +228,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Home(navController: NavController) {
+    val menuItems: List<MenuItem> = getMenuItems()
     Column {
         LazyRow( /* This row is the left/right scrollable menu with icons to filter menu */
             horizontalArrangement = Arrangement.SpaceEvenly,
@@ -553,14 +559,12 @@ fun Home(navController: NavController) {
             }
 
         }
-//        Divider(
-//            thickness = 3.dp,
-//            color = Color(R.color.burger_fuel_purple),
-//            modifier = Modifier.padding(4.dp)
-//        )
         LazyVerticalGrid( /* This vertical grid is the up/down scrollable menu with cards for relevant menu items */
             columns = GridCells.Fixed(2)
         ) {
+//            items(menuItems) {
+//                item -> MenuItemCard(item = item)
+//            }
             item{
                 Column(modifier = Modifier.background(Color.Black))
                 {
@@ -586,13 +590,20 @@ fun Home(navController: NavController) {
                             .fillMaxWidth()
                             .background(color = Color.Yellow)
                     ) {
-                        Text(text = "Lorem Ipsum\n$0.00")
+                        Text(text = "Lorem Ipsum\n$0.00") /* Need to replace with Name and Price from Menu item class */
                     }
                     ElevatedButton(
-                        onClick = {navController.navigate("Home")},
+                        onClick = {},
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
-                        ) {
+                            .padding(4.dp)
+                            .fillMaxWidth(),
+                        shape = RectangleShape,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colorResource(id =R.color.burger_fuel_purple), /* Background color of the button */
+                            contentColor = Color.White /* Color of the text in the button */
+                        )
+                    ) {
                         Text(text = "ADD")
                     }
                 }
@@ -658,4 +669,49 @@ fun Home(navController: NavController) {
 
         }
         }
+}
+
+@Composable
+fun MenuItemCard(item: MenuItem) {
+    Column(modifier = Modifier.background(Color.Black))
+    {
+        Box(
+            modifier = Modifier
+                .fillMaxHeight(0.5f)
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
+                .background(color = Color.Magenta),
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ranch_feed_combo),
+                contentDescription = "Ranch Feed Combo",
+                tint = Color.Unspecified
+            )
+        }
+        Divider(
+            thickness = 1.5.dp,
+            color = Color.Black,
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = Color.Yellow)
+        ) {
+            Text(text = "Lorem Ipsum\n$0.00") /* Need to replace with Name and Price from Menu item class */
+        }
+        ElevatedButton(
+            onClick = {},
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(4.dp)
+                .fillMaxWidth(),
+            shape = RectangleShape,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = colorResource(id =R.color.burger_fuel_purple), /* Background color of the button */
+                contentColor = Color.White /* Color of the text in the button */
+            )
+        ) {
+            Text(text = "ADD")
+        }
+    }
 }
