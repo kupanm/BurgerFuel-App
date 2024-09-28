@@ -28,6 +28,9 @@ import androidx.compose.material.icons.filled.Person
 import nz.ac.canterbury.seng303.lab2.R
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -545,6 +548,11 @@ fun Home(navController: NavController) {
             }
 
         }
+//        Divider(
+//            thickness = 3.dp,
+//            color = Color(R.color.burger_fuel_purple),
+//            modifier = Modifier.padding(4.dp)
+//        )
         LazyVerticalGrid(columns = GridCells.Fixed(2)) {
             item{
                 Box(
@@ -618,8 +626,4 @@ fun Home(navController: NavController) {
 
         }
         }
-//    Divider(
-//        thickness = 1.dp,
-//        color = Color(R.color.burger_fuel_purple)
-//    )
 }
