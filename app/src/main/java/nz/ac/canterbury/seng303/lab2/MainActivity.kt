@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
@@ -28,10 +30,12 @@ import androidx.compose.material.icons.filled.Person
 import nz.ac.canterbury.seng303.lab2.R
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -107,7 +111,7 @@ class MainActivity : ComponentActivity() {
                         )
                     },
                     bottomBar = {
-                        BottomAppBar(
+                        BottomAppBar( /*This is the bottom navigation bar for the app*/
                             containerColor = Color.Transparent,
                             content = {
                                 Row(
@@ -220,9 +224,10 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Home(navController: NavController) {
     Column {
-        LazyRow(
+        LazyRow( /* This row is the left/right scrollable menu with icons to filter menu */
             horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxHeight(0.25f) /*Changes the height of lazy row*/
+            modifier = Modifier
+                .fillMaxHeight(0.25f) /*Changes the height of lazy row*/
         ) {
             item {
                 Column(Modifier.width(150.dp)) {
@@ -553,16 +558,43 @@ fun Home(navController: NavController) {
 //            color = Color(R.color.burger_fuel_purple),
 //            modifier = Modifier.padding(4.dp)
 //        )
-        LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+        LazyVerticalGrid( /* This vertical grid is the up/down scrollable menu with cards for relevant menu items */
+            columns = GridCells.Fixed(2)
+        ) {
             item{
-                Box(
-                    modifier = Modifier.background(color = Color.Magenta),
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ranch_feed_combo),
-                        contentDescription = "Ranch Feed Combo",
-                        tint = Color.Unspecified
+                Column(modifier = Modifier.background(Color.Black))
+                {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight(0.5f)
+                            .fillMaxWidth()
+                            .align(Alignment.CenterHorizontally)
+                            .background(color = Color.Magenta),
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ranch_feed_combo),
+                            contentDescription = "Ranch Feed Combo",
+                            tint = Color.Unspecified
+                        )
+                    }
+                    Divider(
+                            thickness = 1.5.dp,
+                            color = Color.Black,
                     )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(color = Color.Yellow)
+                    ) {
+                        Text(text = "Lorem Ipsum\n$0.00")
+                    }
+                    ElevatedButton(
+                        onClick = {navController.navigate("Home")},
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                        ) {
+                        Text(text = "ADD")
+                    }
                 }
             }
             item{
