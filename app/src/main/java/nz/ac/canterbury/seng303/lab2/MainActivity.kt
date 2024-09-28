@@ -3,6 +3,7 @@ package nz.ac.canterbury.seng303.lab2
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,6 +18,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
@@ -213,224 +216,410 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Home(navController: NavController) {
-    LazyRow (
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.fillMaxHeight(0.25f) /*Changes the height of lazy row*/
-    ) {
-        item{
-            Column(Modifier.width(150.dp)){
-                Box(modifier = Modifier.fillMaxHeight(0.75f).align(alignment = Alignment.CenterHorizontally)){
-                    IconButton(onClick = { navController.navigate("Home") },
-                        modifier = Modifier.align(alignment = Alignment.Center)
-                            .padding(12.dp)) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.specials),
-                            contentDescription = "Specials",
-                            tint = Color.Unspecified,
-                            modifier = Modifier.scale(2.5f)
+    Column {
+        LazyRow(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxHeight(0.25f) /*Changes the height of lazy row*/
+        ) {
+            item {
+                Column(Modifier.width(150.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight(0.75f)
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        IconButton(
+                            onClick = { navController.navigate("Home") },
+                            modifier = Modifier
+                                .align(alignment = Alignment.Center)
+                                .padding(12.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.specials),
+                                contentDescription = "Specials",
+                                tint = Color.Unspecified,
+                                modifier = Modifier.scale(2.5f)
+                            )
+                        }
+                    }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        Text(
+                            text = "Specials",
+                            textAlign = TextAlign.Center,
+                            maxLines = 2,
+//                        modifier = Modifier.width(75.dp)
                         )
                     }
                 }
-                Box(modifier = Modifier.fillMaxHeight().align(alignment = Alignment.CenterHorizontally)){
-                    Text(text="Specials",
-                        textAlign = TextAlign.Center,
-                        maxLines =2,
-//                        modifier = Modifier.width(75.dp)
-                    )
-                }
-                }
             }
-        item{
-            Column(Modifier.width(150.dp)){
-                Box(modifier = Modifier.fillMaxHeight(0.75f).align(alignment = Alignment.CenterHorizontally)){
-                    IconButton(onClick = { navController.navigate("Home") },
-                        modifier = Modifier.align(alignment = Alignment.Center)
-                            .padding(12.dp)) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.beef),
-                            contentDescription = "NZ Beef",
-                            tint = Color.Unspecified,
-                            modifier = Modifier.scale(2.5f)
+            item {
+                Column(Modifier.width(150.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight(0.75f)
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        IconButton(
+                            onClick = { navController.navigate("Home") },
+                            modifier = Modifier
+                                .align(alignment = Alignment.Center)
+                                .padding(12.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.beef),
+                                contentDescription = "NZ Beef",
+                                tint = Color.Unspecified,
+                                modifier = Modifier.scale(2.5f)
+                            )
+                        }
+                    }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        Text(
+                            text = "NZ Beef",
+                            textAlign = TextAlign.Center,
+                            maxLines = 2,
+//                        modifier = Modifier.width(75.dp)
                         )
                     }
                 }
-                Box(modifier = Modifier.fillMaxHeight().align(alignment = Alignment.CenterHorizontally)){
-                    Text(text="NZ Beef",
-                        textAlign = TextAlign.Center,
-                        maxLines =2,
-//                        modifier = Modifier.width(75.dp)
-                    )
-                }
             }
-        }
 
-        item{
-            Column(Modifier.width(150.dp)){
-                Box(modifier = Modifier.fillMaxHeight(0.75f).align(alignment = Alignment.CenterHorizontally)){
-                    IconButton(onClick = { navController.navigate("Home") },
-                        modifier = Modifier.align(alignment = Alignment.Center)
-                            .padding(12.dp)) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.chicken),
-                            contentDescription = "Free Range Chicken Burgers",
-                            tint = Color.Unspecified,
-                            modifier = Modifier.scale(2.5f)
+            item {
+                Column(Modifier.width(150.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight(0.75f)
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        IconButton(
+                            onClick = { navController.navigate("Home") },
+                            modifier = Modifier
+                                .align(alignment = Alignment.Center)
+                                .padding(12.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.chicken),
+                                contentDescription = "Free Range Chicken Burgers",
+                                tint = Color.Unspecified,
+                                modifier = Modifier.scale(2.5f)
+                            )
+                        }
+                    }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        Text(
+                            text = "Free Range Chicken",
+                            textAlign = TextAlign.Center,
+                            maxLines = 2,
+//                        modifier = Modifier.width(75.dp)
                         )
                     }
                 }
-                Box(modifier = Modifier.fillMaxHeight().align(alignment = Alignment.CenterHorizontally)){
-                    Text(text="Free Range Chicken",
-                        textAlign = TextAlign.Center,
-                        maxLines =2,
-//                        modifier = Modifier.width(75.dp)
-                    )
-                }
             }
-        }
 
-        item{
-            Column(Modifier.width(150.dp)){
-                Box(modifier = Modifier.fillMaxHeight(0.75f).align(alignment = Alignment.CenterHorizontally)){
-                    IconButton(onClick = { navController.navigate("Home") },
-                        modifier = Modifier.align(alignment = Alignment.Center)
-                            .padding(12.dp)) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.plant),
-                            contentDescription = "Plant-Powered",
-                            tint = Color.Unspecified,
-                            modifier = Modifier.scale(2.5f)
+            item {
+                Column(Modifier.width(150.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight(0.75f)
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        IconButton(
+                            onClick = { navController.navigate("Home") },
+                            modifier = Modifier
+                                .align(alignment = Alignment.Center)
+                                .padding(12.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.plant),
+                                contentDescription = "Plant-Powered",
+                                tint = Color.Unspecified,
+                                modifier = Modifier.scale(2.5f)
+                            )
+                        }
+                    }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        Text(
+                            text = "Plant-Powered",
+                            textAlign = TextAlign.Center,
+                            maxLines = 2,
+//                        modifier = Modifier.width(75.dp)
                         )
                     }
                 }
-                Box(modifier = Modifier.fillMaxHeight().align(alignment = Alignment.CenterHorizontally)){
-                    Text(text="Plant-Powered",
-                        textAlign = TextAlign.Center,
-                        maxLines =2,
-//                        modifier = Modifier.width(75.dp)
-                    )
-                }
             }
-        }
 
-        item{
-            Column(Modifier.width(150.dp)){
-                Box(modifier = Modifier.fillMaxHeight(0.75f).align(alignment = Alignment.CenterHorizontally)){
-                    IconButton(onClick = { navController.navigate("Home") },
-                        modifier = Modifier.align(alignment = Alignment.Center)
-                            .padding(12.dp)) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.minis),
-                            contentDescription = "Minis",
-                            tint = Color.Unspecified,
-                            modifier = Modifier.scale(2.5f)
+            item {
+                Column(Modifier.width(150.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight(0.75f)
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        IconButton(
+                            onClick = { navController.navigate("Home") },
+                            modifier = Modifier
+                                .align(alignment = Alignment.Center)
+                                .padding(12.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.minis),
+                                contentDescription = "Minis",
+                                tint = Color.Unspecified,
+                                modifier = Modifier.scale(2.5f)
+                            )
+                        }
+                    }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        Text(
+                            text = "Minis",
+                            textAlign = TextAlign.Center,
+                            maxLines = 2,
+//                        modifier = Modifier.width(75.dp)
                         )
                     }
                 }
-                Box(modifier = Modifier.fillMaxHeight().align(alignment = Alignment.CenterHorizontally)){
-                    Text(text="Minis",
-                        textAlign = TextAlign.Center,
-                        maxLines =2,
-//                        modifier = Modifier.width(75.dp)
-                    )
-                }
             }
-        }
 
-        item{
-            Column(Modifier.width(150.dp)){
-                Box(modifier = Modifier.fillMaxHeight(0.75f).align(alignment = Alignment.CenterHorizontally)){
-                    IconButton(onClick = { navController.navigate("Home") },
-                        modifier = Modifier.align(alignment = Alignment.Center)
-                            .padding(12.dp)) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.sides),
-                            contentDescription = "Sides",
-                            tint = Color.Unspecified,
-                            modifier = Modifier.scale(2.5f)
+            item {
+                Column(Modifier.width(150.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight(0.75f)
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        IconButton(
+                            onClick = { navController.navigate("Home") },
+                            modifier = Modifier
+                                .align(alignment = Alignment.Center)
+                                .padding(12.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.sides),
+                                contentDescription = "Sides",
+                                tint = Color.Unspecified,
+                                modifier = Modifier.scale(2.5f)
+                            )
+                        }
+                    }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        Text(
+                            text = "Sides",
+                            textAlign = TextAlign.Center,
+                            maxLines = 2,
+//                        modifier = Modifier.width(75.dp)
                         )
                     }
                 }
-                Box(modifier = Modifier.fillMaxHeight().align(alignment = Alignment.CenterHorizontally)){
-                    Text(text="Sides",
-                        textAlign = TextAlign.Center,
-                        maxLines =2,
-//                        modifier = Modifier.width(75.dp)
-                    )
-                }
             }
-        }
 
-        item{
-            Column(Modifier.width(150.dp)){
-                Box(modifier = Modifier.fillMaxHeight(0.75f).align(alignment = Alignment.CenterHorizontally)){
-                    IconButton(onClick = { navController.navigate("Home") },
-                        modifier = Modifier.align(alignment = Alignment.Center)
-                            .padding(12.dp)) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.drinks),
-                            contentDescription = "Thickshakes & Drinks",
-                            tint = Color.Unspecified,
-                            modifier = Modifier.scale(2.5f)
+            item {
+                Column(Modifier.width(150.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight(0.75f)
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        IconButton(
+                            onClick = { navController.navigate("Home") },
+                            modifier = Modifier
+                                .align(alignment = Alignment.Center)
+                                .padding(12.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.drinks),
+                                contentDescription = "Thickshakes & Drinks",
+                                tint = Color.Unspecified,
+                                modifier = Modifier.scale(2.5f)
+                            )
+                        }
+                    }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        Text(
+                            text = "Thickshakes & Drinks",
+                            textAlign = TextAlign.Center,
+                            maxLines = 2,
+//                        modifier = Modifier.width(75.dp)
                         )
                     }
                 }
-                Box(modifier = Modifier.fillMaxHeight().align(alignment = Alignment.CenterHorizontally)){
-                    Text(text="Thickshakes & Drinks",
-                        textAlign = TextAlign.Center,
-                        maxLines =2,
-//                        modifier = Modifier.width(75.dp)
-                    )
-                }
             }
-        }
 
-        item{
-            Column(Modifier.width(150.dp)){
-                Box(modifier = Modifier.fillMaxHeight(0.75f).align(alignment = Alignment.CenterHorizontally)){
-                    IconButton(onClick = { navController.navigate("Home") },
-                        modifier = Modifier.align(alignment = Alignment.Center)
-                            .padding(12.dp)) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.kids),
-                            contentDescription = "Kids Ink. Meals",
-                            tint = Color.Unspecified,
-                            modifier = Modifier.scale(2.5f)
+            item {
+                Column(Modifier.width(150.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight(0.75f)
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        IconButton(
+                            onClick = { navController.navigate("Home") },
+                            modifier = Modifier
+                                .align(alignment = Alignment.Center)
+                                .padding(12.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.kids),
+                                contentDescription = "Kids Ink. Meals",
+                                tint = Color.Unspecified,
+                                modifier = Modifier.scale(2.5f)
+                            )
+                        }
+                    }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        Text(
+                            text = "Kids Ink. Meals",
+                            textAlign = TextAlign.Center,
+                            maxLines = 2,
+//                        modifier = Modifier.width(75.dp)
                         )
                     }
                 }
-                Box(modifier = Modifier.fillMaxHeight().align(alignment = Alignment.CenterHorizontally)){
-                    Text(text="Kids Ink. Meals",
-                        textAlign = TextAlign.Center,
-                        maxLines =2,
-//                        modifier = Modifier.width(75.dp)
-                    )
-                }
             }
-        }
 
-        item{
-            Column(Modifier.width(150.dp)){
-                Box(modifier = Modifier.fillMaxHeight(0.75f).align(alignment = Alignment.CenterHorizontally)){
-                    IconButton(onClick = { navController.navigate("Home") },
-                        modifier = Modifier.align(alignment = Alignment.Center)
-                            .padding(12.dp)) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.sauces),
-                            contentDescription = "Sauces",
-                            tint = Color.Unspecified,
-                            modifier = Modifier.scale(2.5f)
+            item {
+                Column(Modifier.width(150.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight(0.75f)
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        IconButton(
+                            onClick = { navController.navigate("Home") },
+                            modifier = Modifier
+                                .align(alignment = Alignment.Center)
+                                .padding(12.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.sauces),
+                                contentDescription = "Sauces",
+                                tint = Color.Unspecified,
+                                modifier = Modifier.scale(2.5f)
+                            )
+                        }
+                    }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .align(alignment = Alignment.CenterHorizontally)
+                    ) {
+                        Text(
+                            text = "Sauces",
+                            textAlign = TextAlign.Center,
+                            maxLines = 2,
+//                        modifier = Modifier.width(75.dp)
                         )
                     }
                 }
-                Box(modifier = Modifier.fillMaxHeight().align(alignment = Alignment.CenterHorizontally)){
-                    Text(text="Sauces",
-                        textAlign = TextAlign.Center,
-                        maxLines =2,
-//                        modifier = Modifier.width(75.dp)
+            }
+
+        }
+        LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+            item{
+                Box(
+                    modifier = Modifier.background(color = Color.Magenta),
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ranch_feed_combo),
+                        contentDescription = "Ranch Feed Combo",
+                        tint = Color.Unspecified
                     )
                 }
             }
-        }
+            item{
+                Box(
+                    modifier = Modifier.background(color = Color.Red),
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.rebel_feed_combo),
+                        contentDescription = "Rebel Feed Combo",
+                        tint = Color.Unspecified,
+                        modifier = Modifier
+                    )
+                }
+            }
+            item{
+                Box(
+                    modifier = Modifier.background(color = Color.Blue),
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ranch_wrangler_burger),
+                        contentDescription = "Ranch Wrangler Burger",
+                        tint = Color.Unspecified
+                    )
+                }
+            }
+            item{
+                Box(
+                    modifier = Modifier.background(color = Color.Cyan),
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.iron_rebel_burger),
+                        contentDescription = "Iron Rebel Burger",
+                        tint = Color.Unspecified
+                    )
+                }
+            }
+            item{
+                Box(
+                    modifier = Modifier.background(color = Color.Green),
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.chev_brulee_drink),
+                        contentDescription = "Chev Brulee",
+                        tint = Color.Unspecified
+                    )
+                }
+            }
+            item{
+                Box(
+                    modifier = Modifier.background(color = Color.Gray),
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.loaded_fries),
+                        contentDescription = "Loaded Fries",
+                        tint = Color.Unspecified
+                    )
+                }
+            }
 
-    }
+
+
+        }
+        }
+//    Divider(
+//        thickness = 1.dp,
+//        color = Color(R.color.burger_fuel_purple)
+//    )
 }
