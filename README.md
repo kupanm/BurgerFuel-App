@@ -7,7 +7,7 @@
 - [ ] Colour Palette
 - [ ] Font
 - [ ] Top Bar with current selected store and cart
-- [ ] Food Icons
+- [X] Food Icons
 - [ ] Food Items + Description
 - [ ] Filtering menu items based on icon selected
 - [ ] Persist user data
