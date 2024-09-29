@@ -37,6 +37,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -568,7 +569,18 @@ fun Home(navController: NavController) {
             item{
                 Column(modifier = Modifier.background(Color.Black))
                 {
-                    Box(
+                    ElevatedCard(
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 6.dp
+                        ),
+                        modifier = Modifier
+                            .size(width = 210.dp, height = 280.dp)
+                            .padding(4.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = Color.White
+                        )
+                    ) {
+                        Box(
                         modifier = Modifier
                             .fillMaxHeight(0.5f)
                             .fillMaxWidth()
@@ -578,14 +590,10 @@ fun Home(navController: NavController) {
                         Icon(
                             painter = painterResource(id = R.drawable.ranch_feed_combo),
                             contentDescription = "Ranch Feed Combo",
-                            tint = Color.Unspecified
+                            tint = Color.Unspecified,
                         )
                     }
-                    Divider(
-                            thickness = 1.5.dp,
-                            color = Color.Black,
-                    )
-                    Box(
+                        Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .background(color = Color.Yellow)
@@ -606,6 +614,45 @@ fun Home(navController: NavController) {
                     ) {
                         Text(text = "ADD")
                     }
+                    }
+//                    Box(
+//                        modifier = Modifier
+//                            .fillMaxHeight(0.5f)
+//                            .fillMaxWidth()
+//                            .align(Alignment.CenterHorizontally)
+//                            .background(color = Color.Magenta),
+//                    ) {
+//                        Icon(
+//                            painter = painterResource(id = R.drawable.ranch_feed_combo),
+//                            contentDescription = "Ranch Feed Combo",
+//                            tint = Color.Unspecified
+//                        )
+//                    }
+//                    Divider(
+//                            thickness = 1.5.dp,
+//                            color = Color.Black,
+//                    )
+//                    Box(
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .background(color = Color.Yellow)
+//                    ) {
+//                        Text(text = "Lorem Ipsum\n$0.00") /* Need to replace with Name and Price from Menu item class */
+//                    }
+//                    ElevatedButton(
+//                        onClick = {},
+//                        modifier = Modifier
+//                            .align(Alignment.CenterHorizontally)
+//                            .padding(4.dp)
+//                            .fillMaxWidth(),
+//                        shape = RectangleShape,
+//                        colors = ButtonDefaults.buttonColors(
+//                            containerColor = colorResource(id =R.color.burger_fuel_purple), /* Background color of the button */
+//                            contentColor = Color.White /* Color of the text in the button */
+//                        )
+//                    ) {
+//                        Text(text = "ADD")
+//                    }
                 }
             }
             item{
