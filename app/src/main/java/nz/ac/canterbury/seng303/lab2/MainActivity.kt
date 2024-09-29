@@ -1,6 +1,8 @@
 package nz.ac.canterbury.seng303.lab2
 
 import android.os.Bundle
+import android.view.Menu
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -21,6 +23,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -51,6 +54,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
@@ -229,7 +233,6 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Home(navController: NavController) {
-    val menuItems: List<MenuItem> = getMenuItems()
     Column {
         LazyRow( /* This row is the left/right scrollable menu with icons to filter menu */
             horizontalArrangement = Arrangement.SpaceEvenly,
@@ -560,205 +563,82 @@ fun Home(navController: NavController) {
             }
 
         }
+        val menuItems : List<MenuItem> = MenuItem.getMenuItems()
         LazyVerticalGrid( /* This vertical grid is the up/down scrollable menu with cards for relevant menu items */
             columns = GridCells.Fixed(2)
         ) {
-//            items(menuItems) {
-//                item -> MenuItemCard(item = item)
-//            }
-            item{
-                Column(modifier = Modifier.background(Color.Black))
-                {
-                    ElevatedCard(
-                        elevation = CardDefaults.cardElevation(
-                            defaultElevation = 6.dp
-                        ),
-                        modifier = Modifier
-                            .size(width = 210.dp, height = 280.dp)
-                            .padding(4.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = Color.White
-                        )
-                    ) {
-                        Box(
-                        modifier = Modifier
-                            .fillMaxHeight(0.5f)
-                            .fillMaxWidth()
-                            .align(Alignment.CenterHorizontally)
-                            .background(color = Color.Magenta),
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ranch_feed_combo),
-                            contentDescription = "Ranch Feed Combo",
-                            tint = Color.Unspecified,
-                        )
-                    }
-                        Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(color = Color.Yellow)
-                    ) {
-                        Text(text = "Lorem Ipsum\n$0.00") /* Need to replace with Name and Price from Menu item class */
-                    }
-                    ElevatedButton(
-                        onClick = {},
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .padding(4.dp)
-                            .fillMaxWidth(),
-                        shape = RectangleShape,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = colorResource(id =R.color.burger_fuel_purple), /* Background color of the button */
-                            contentColor = Color.White /* Color of the text in the button */
-                        )
-                    ) {
-                        Text(text = "ADD")
-                    }
-                    }
-//                    Box(
-//                        modifier = Modifier
-//                            .fillMaxHeight(0.5f)
-//                            .fillMaxWidth()
-//                            .align(Alignment.CenterHorizontally)
-//                            .background(color = Color.Magenta),
-//                    ) {
-//                        Icon(
-//                            painter = painterResource(id = R.drawable.ranch_feed_combo),
-//                            contentDescription = "Ranch Feed Combo",
-//                            tint = Color.Unspecified
-//                        )
-//                    }
-//                    Divider(
-//                            thickness = 1.5.dp,
-//                            color = Color.Black,
-//                    )
-//                    Box(
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .background(color = Color.Yellow)
-//                    ) {
-//                        Text(text = "Lorem Ipsum\n$0.00") /* Need to replace with Name and Price from Menu item class */
-//                    }
-//                    ElevatedButton(
-//                        onClick = {},
-//                        modifier = Modifier
-//                            .align(Alignment.CenterHorizontally)
-//                            .padding(4.dp)
-//                            .fillMaxWidth(),
-//                        shape = RectangleShape,
-//                        colors = ButtonDefaults.buttonColors(
-//                            containerColor = colorResource(id =R.color.burger_fuel_purple), /* Background color of the button */
-//                            contentColor = Color.White /* Color of the text in the button */
-//                        )
-//                    ) {
-//                        Text(text = "ADD")
-//                    }
+            menuItems.forEach { foodItem ->
+                item {
+                    MenuItemCard(foodItem)
                 }
             }
-            item{
-                Box(
-                    modifier = Modifier.background(color = Color.Red),
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.rebel_feed_combo),
-                        contentDescription = "Rebel Feed Combo",
-                        tint = Color.Unspecified,
-                        modifier = Modifier
-                    )
-                }
-            }
-            item{
-                Box(
-                    modifier = Modifier.background(color = Color.Blue),
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ranch_wrangler_burger),
-                        contentDescription = "Ranch Wrangler Burger",
-                        tint = Color.Unspecified
-                    )
-                }
-            }
-            item{
-                Box(
-                    modifier = Modifier.background(color = Color.Cyan),
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.iron_rebel_burger),
-                        contentDescription = "Iron Rebel Burger",
-                        tint = Color.Unspecified
-                    )
-                }
-            }
-            item{
-                Box(
-                    modifier = Modifier.background(color = Color.Green),
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.chev_brulee_drink),
-                        contentDescription = "Chev Brulee",
-                        tint = Color.Unspecified
-                    )
-                }
-            }
-            item{
-                Box(
-                    modifier = Modifier.background(color = Color.Gray),
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.loaded_fries),
-                        contentDescription = "Loaded Fries",
-                        tint = Color.Unspecified
-                    )
-                }
-            }
-
-
-
         }
         }
 }
 
 @Composable
+fun MenuRowIcon(item: MenuItem) {
+
+}
+@Composable
 fun MenuItemCard(item: MenuItem) {
+    val context = LocalContext.current
     Column(modifier = Modifier.background(Color.Black))
     {
-        Box(
+        ElevatedCard(
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 6.dp
+            ),
             modifier = Modifier
-                .fillMaxHeight(0.5f)
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
-                .background(color = Color.Magenta),
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ranch_feed_combo),
-                contentDescription = "Ranch Feed Combo",
-                tint = Color.Unspecified
-            )
-        }
-        Divider(
-            thickness = 1.5.dp,
-            color = Color.Black,
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = Color.Yellow)
-        ) {
-            Text(text = "Lorem Ipsum\n$0.00") /* Need to replace with Name and Price from Menu item class */
-        }
-        ElevatedButton(
-            onClick = {},
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
+                .size(width = 210.dp, height = 220.dp)
                 .padding(4.dp)
-                .fillMaxWidth(),
-            shape = RectangleShape,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = colorResource(id =R.color.burger_fuel_purple), /* Background color of the button */
-                contentColor = Color.White /* Color of the text in the button */
-            )
+                .clickable(onClick = {
+                    Toast
+                        .makeText(
+                            context,
+                            "Dialog box with product info not implemented yet :(",
+                            Toast.LENGTH_SHORT
+                        )
+                        .show()
+                }) ,
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White
+            ),
         ) {
-            Text(text = "ADD")
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight(0.5f)
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally)
+                    .background(color = Color.Magenta),
+            ) {
+                Icon(
+                    painter = painterResource(id = item.icon),
+                    contentDescription = item.name,
+                    tint = Color.Unspecified,
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = Color.Yellow)
+            ) {
+                Text(text = item.name + "\n" + item.price) /* Need to replace with Name and Price from Menu item class */
+            }
+            ElevatedButton(
+                onClick = {},
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(4.dp)
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(corner = CornerSize(4.dp)),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id =R.color.burger_fuel_purple), /* Background color of the button */
+                    contentColor = Color.White /* Color of the text in the button */
+                )
+            ) {
+                Text(text = "ADD")
+            }
         }
     }
 }
