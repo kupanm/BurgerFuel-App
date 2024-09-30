@@ -68,6 +68,87 @@ class MenuItem(
                     9.80,
                     "Specials"
                 ),
+
+                MenuItem(
+                    7,
+                    R.drawable.specials,
+                    "Specials",
+                    "Specials Icon",
+                    0.00,
+                    "Icons"
+                ),
+
+                MenuItem(
+                    8,
+                    R.drawable.beef,
+                    "NZ Beef",
+                    "NZ Beef Icon",
+                    0.00,
+                    "Icons"
+                ),
+
+                MenuItem(
+                    9,
+                    R.drawable.chicken,
+                    "Free Range Chicken",
+                    "Free Range Chicken Icon",
+                    0.00,
+                    "Icons"
+                    ),
+
+                MenuItem(
+                    10,
+                    R.drawable.plant,
+                    "Plant-Powered",
+                    "Plant-Powered Icon",
+                    0.00,
+                    "Icons"
+                ),
+
+                MenuItem(
+                    11,
+                    R.drawable.minis,
+                    "Minis",
+                    "Minis Icon",
+                    0.00,
+                    "Icons"
+                ),
+
+                MenuItem(
+                    12,
+                    R.drawable.sides,
+                    "Sides",
+                    "Sides Icon",
+                    0.00,
+                    "Icons"
+                ),
+
+                MenuItem(
+                    13,
+                    R.drawable.drinks,
+                    "Thickshakes & Drinks",
+                    "Thickshakes & Drinks Icon",
+                    0.00,
+                    "Icons"
+                ),
+
+                MenuItem(
+                    14,
+                    R.drawable.kids,
+                    "Kids Ink. Meals",
+                    "Kids Ink. Meals Icon",
+                    0.00,
+                    "Icons"
+                ),
+
+                MenuItem(
+                    15,
+                    R.drawable.sauces,
+                    "Sauces",
+                    "Sauces Icon",
+                    0.00,
+                    "Icons"
+                )
             )
         }
     }
