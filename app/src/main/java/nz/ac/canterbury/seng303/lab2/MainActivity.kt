@@ -310,15 +310,7 @@ fun MenuRowIcon(item: MenuIcon) {
 @Composable
 fun MenuItemCard(item: MenuItem) {
     val context = LocalContext.current
-    val imageView = ImageView(context)
-    imageView.setImageResource(item.icon)
-    imageView.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-    val layout = LinearLayout(context)
-    layout.orientation = LinearLayout.VERTICAL
-    layout.addView(imageView)
-    val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-    builder.setMessage(item.name).setView(layout)
-    val dialog: AlertDialog = builder.create()
+    val dialog: AlertDialog = displayItemDescription(item)
     Column(modifier = Modifier.background(Color.Black))
     {
         ElevatedCard(
@@ -371,4 +363,19 @@ fun MenuItemCard(item: MenuItem) {
             }
         }
     }
+}
+
+@Composable
+fun displayItemDescription(item: MenuItem): AlertDialog {
+    val context = LocalContext.current
+    val imageView = ImageView(context)
+    imageView.setImageResource(item.icon)
+    imageView.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+    val layout = LinearLayout(context)
+    layout.orientation = LinearLayout.VERTICAL
+    layout.addView(imageView)
+    val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+    builder.setTitle(item.name).setView(layout)
+    val dialog: AlertDialog = builder.create()
+    return dialog
 }
