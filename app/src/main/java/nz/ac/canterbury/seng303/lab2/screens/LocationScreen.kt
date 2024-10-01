@@ -1,11 +1,17 @@
 package nz.ac.canterbury.seng303.lab2.screens
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,6 +28,7 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberMarkerState
 import nz.ac.canterbury.seng303.lab2.models.Store
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.window.DialogProperties
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
@@ -36,6 +43,10 @@ import nz.ac.canterbury.seng303.lab2.MainActivity
 @Composable
 fun Locations(navController: NavController)
 {
+    // permission dialog
+    val permissionDialog = remember { mutableStateOf(true) }
+
+    // current context
     val context = LocalContext.current
     val locationClient = remember {
         LocationServices.getFusedLocationProviderClient(context)
@@ -43,7 +54,9 @@ fun Locations(navController: NavController)
 
     var foundUserLocation by remember { mutableStateOf(false) }
 
-    var userLocation = LatLng(-43.5565101,172.7005736)
+    var userLocation by remember {mutableStateOf(
+    LatLng(-43.5565101,172.7005736))}
+
 
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(LatLng(-43.5307882, 172.5752179), 13f) // Default to store
@@ -66,19 +79,41 @@ fun Locations(navController: NavController)
         // to handle the case where the user grants the permission. See the documentation
         // for ActivityCompat#requestPermissions for more details.
 
+        val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission()) {}
+        
+
+        // Launch ask for permission
+        if(permissionDialog.value) {
+            AlertDialog(
+                title = { Text(text = "Allow permission") },
+                text = { Text(text = "Allow the app to use your location and store your last location used in the app") },
+                onDismissRequest = { permissionDialog.value = false },
+                dismissButton = {
+                    Button(onClick = { permissionDialog.value = false }) {
+                        Text(text = "Deny")
+                    }
+                },
+                confirmButton = {
+                    Button(onClick = { launcher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+                        permissionDialog.value = false
+                    }) {
+                        Text(text = "Confirm")
+                    }
+                },
+                properties = DialogProperties(dismissOnClickOutside = true)
+            )
+        }
 
         // get last used store
 
         Log.d("STORE_MAP", "Location permission not granted" )
     } else {
 
-
-
         locationClient.getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY, CancellationTokenSource().token)
             .addOnSuccessListener { location ->
-                userLocation = LatLng(location.latitude, location.longitude)
+                userLocation to LatLng(location.latitude, location.longitude)
 
-                foundUserLocation = true
+                foundUserLocation to true
                 cameraPositionState.position = CameraPosition(userLocation,13f,0f,0f)
 
                 Log.d("Location", "Found user location")
@@ -86,7 +121,6 @@ fun Locations(navController: NavController)
             .addOnFailureListener { exception ->
                 Log.d("Location", "Location Exception: $exception")
             }
-
     }
 
 
@@ -140,6 +174,12 @@ fun Locations(navController: NavController)
     }
 }
 
+
+@SuppressLint("MissingPermission")
+fun GetUserLocation(locationClient : FusedLocationProviderClient, userLocation : LatLng, foundUserLocation : Boolean)
+{
+
+}
 
 @Composable
 fun StoreInfoWindow(selectedStore : Marker)
