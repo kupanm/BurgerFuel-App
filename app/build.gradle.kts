@@ -90,7 +90,7 @@ dependencies {
 
     implementation("com.android.volley:volley:1.2.0")
 }
-
+ 
 secrets {
     // To add your Maps API key to this project:
     // 1. If the secrets.properties file does not exist, create it in the same folder as the local.properties file.
