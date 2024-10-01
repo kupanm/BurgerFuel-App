@@ -33,6 +33,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.ShoppingCart
 import nz.ac.canterbury.seng303.lab2.R
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
@@ -50,6 +51,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -58,6 +61,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -75,6 +79,7 @@ import androidx.navigation.navArgument
 import nz.ac.canterbury.seng303.lab2.models.MenuIcon
 import nz.ac.canterbury.seng303.lab2.models.MenuItem
 import nz.ac.canterbury.seng303.lab2.models.MenuItem.Companion.getMenuItems
+import com.google.android.gms.location.FusedLocationProviderClient
 import nz.ac.canterbury.seng303.lab2.screens.CreateNote
 import nz.ac.canterbury.seng303.lab2.screens.EditNote
 import nz.ac.canterbury.seng303.lab2.screens.ItemCart
@@ -107,6 +112,7 @@ class MainActivity : ComponentActivity() {
                     topBar =  {
                         // Add your AppBar content here
                         TopAppBar(
+                            colors = TopAppBarDefaults.topAppBarColors(containerColor = Yellow),
                             title = { Row(verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Center,
                                 modifier = Modifier.scale(0.5f)) {
@@ -121,6 +127,14 @@ class MainActivity : ComponentActivity() {
                                     Icon(
                                         imageVector = Icons.Default.LocationOn,
                                         contentDescription = "Location"
+                                    )
+                                }
+                            },
+                            actions = {
+                                IconButton(onClick = { /*TODO*/ }) {
+                                    Icon(
+                                        imageVector = Icons.Default.ShoppingCart,
+                                        contentDescription = "Cart"
                                     )
                                 }
                             }
