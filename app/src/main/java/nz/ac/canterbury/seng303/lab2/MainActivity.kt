@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.ShoppingCart
 import nz.ac.canterbury.seng303.lab2.R
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
@@ -25,11 +26,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
@@ -41,6 +45,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.android.gms.location.FusedLocationProviderClient
 import nz.ac.canterbury.seng303.lab2.screens.CreateNote
 import nz.ac.canterbury.seng303.lab2.screens.EditNote
 import nz.ac.canterbury.seng303.lab2.screens.ItemCart
@@ -73,12 +78,14 @@ class MainActivity : ComponentActivity() {
                     topBar =  {
                         // Add your AppBar content here
                         TopAppBar(
+                            colors = TopAppBarDefaults.topAppBarColors(containerColor = Yellow),
                             title = { Row(verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Center,
                                 modifier = Modifier.scale(0.5f)) {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.borgorlogo),
-                                    contentDescription = "Borgor Logo"
+                                    painter = painterResource(id = R.drawable.borgor_logo),
+                                    contentDescription = "Borgor Logo",
+                                    tint = Color.Unspecified
                                 )
                             } },
                             navigationIcon = {
@@ -86,6 +93,14 @@ class MainActivity : ComponentActivity() {
                                     Icon(
                                         imageVector = Icons.Default.LocationOn,
                                         contentDescription = "Location"
+                                    )
+                                }
+                            },
+                            actions = {
+                                IconButton(onClick = { /*TODO*/ }) {
+                                    Icon(
+                                        imageVector = Icons.Default.ShoppingCart,
+                                        contentDescription = "Cart"
                                     )
                                 }
                             }
