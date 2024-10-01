@@ -37,6 +37,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -110,7 +111,7 @@ fun Profile(navController: NavController)
 
         Spacer(modifier = Modifier.height(40.dp).fillMaxWidth())
 
-        val iconSize: Int = 80
+        val iconSize: Int = 75 
         val borderWidth: Float = 2F
         val textSize = MaterialTheme.typography.bodyLarge
         val backgroundColor = gradientBrush
@@ -140,12 +141,7 @@ fun Profile(navController: NavController)
                                 shape = RoundedCornerShape(8.dp),
                                 clip = false
                             )
-                            .border(
-                                width = borderWidth.dp,
-                                color = Color.Transparent,
-                                shape = RoundedCornerShape(8.dp)
-                            )
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(RoundedCornerShape(24.dp))
                             .background(backgroundColor)
                             .padding(8.dp)
                             .size(iconSize.dp)
@@ -180,12 +176,7 @@ fun Profile(navController: NavController)
                                 shape = RoundedCornerShape(8.dp),
                                 clip = false
                             )
-                            .border(
-                                width = borderWidth.dp,
-                                color = Color.Transparent,
-                                shape = RoundedCornerShape(8.dp)
-                            )
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(RoundedCornerShape(24.dp))
                             .background(backgroundColor)
                             .padding(8.dp)
                             .size(iconSize.dp)
@@ -220,12 +211,7 @@ fun Profile(navController: NavController)
                                 shape = RoundedCornerShape(8.dp),
                                 clip = false
                             )
-                            .border(
-                                width = borderWidth.dp,
-                                color = Color.Transparent,
-                                shape = RoundedCornerShape(8.dp)
-                            )
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(RoundedCornerShape(24.dp))
                             .background(backgroundColor)
                             .padding(8.dp)
                             .size(iconSize.dp)
