@@ -111,7 +111,7 @@ fun Profile(navController: NavController)
 
         Spacer(modifier = Modifier.height(40.dp).fillMaxWidth())
 
-        val iconSize: Int = 75 
+        val iconSize: Int = 75
         val borderWidth: Float = 2F
         val textSize = MaterialTheme.typography.bodyLarge
         val backgroundColor = gradientBrush
