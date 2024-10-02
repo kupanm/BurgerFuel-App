@@ -111,7 +111,7 @@ class MainActivity : ComponentActivity() {
                                 }
                             },
                             actions = {
-                                IconButton(onClick = { /*TODO*/ }) {
+                                IconButton(onClick = { navController.navigate("Cart") }) {
                                     Icon(
                                         imageVector = Icons.Default.ShoppingCart,
                                         contentDescription = "Cart",
@@ -176,6 +176,9 @@ class MainActivity : ComponentActivity() {
                             }
                             composable("PastOrders") {
                                 PastOrders(navController = navController)
+                            }
+                            composable("Cart") {
+                                ItemCart(navController = navController)
                             }
                         }
 
