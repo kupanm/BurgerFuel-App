@@ -1,6 +1,7 @@
 package nz.ac.canterbury.seng303.lab2
 
 import android.app.AlertDialog
+import android.icu.text.DecimalFormat
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -47,8 +48,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -74,6 +77,7 @@ import nz.ac.canterbury.seng303.lab2.screens.PastOrders
 import nz.ac.canterbury.seng303.lab2.screens.Profile
 import nz.ac.canterbury.seng303.lab2.ui.theme.Lab1Theme
 import nz.ac.canterbury.seng303.lab2.viewmodels.NoteViewModel
+import kotlin.math.roundToInt
 import org.koin.androidx.viewmodel.ext.android.viewModel as koinViewModel
 
 class MainActivity : ComponentActivity() {
@@ -92,7 +96,7 @@ class MainActivity : ComponentActivity() {
                     topBar =  {
                         // Add your AppBar content here
                         TopAppBar(
-                            colors = TopAppBarDefaults.topAppBarColors(containerColor = Yellow),
+//                            colors = TopAppBarDefaults.topAppBarColors(containerColor = Yellow),
                             title = { Row(verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Center,
                                 modifier = Modifier.scale(0.5f)) {
@@ -236,12 +240,13 @@ class MainActivity : ComponentActivity() {
 fun Home(navController: NavController) {
     val menuItems : List<MenuItem> = MenuItem.getMenuItems() /* Items for the scrollable grid for menu selection */
     val menuIcons : List<MenuIcon> = MenuIcon.getMenuIcons() /* Items for the scrollable row for filtering the menu */
+    var selectedIcon by remember { mutableStateOf(menuIcons.first()) }
     val (selectedIndex, setSelectedIndex) = remember { mutableStateOf(false) } /* MAYBE USE THIS TO ONLY SELECT ONE MENU ITEM AT A TIME */
     Column {
         LazyRow( /* This row is the left/right scrollable menu with icons to filter menu */
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier
-                .fillMaxHeight(0.25f) /*Changes the height of lazy row*/
+                .fillMaxHeight(0.3f) /*Changes the height of lazy row*/
         ) {
             menuIcons.forEach { foodIcon ->
                 item {
@@ -254,7 +259,7 @@ fun Home(navController: NavController) {
         ) {
             menuItems.forEach { foodItem ->
                 item {
-                    if (foodItem.type == "Specials") {
+                    if (foodItem.type == "Specials") { /*TODO CHANGE TO if food.id == selected.id show menuItemCard */
                         MenuItemCard(foodItem)
                     }
                 }
@@ -264,16 +269,14 @@ fun Home(navController: NavController) {
 }
 
 @Composable
-fun MenuRowIcon(item: MenuIcon) {
-    val context = LocalContext.current
+fun MenuRowIcon(item: MenuIcon) { /* TODO EDIT SO THAT ONLY ONE ICON CAN BE CLICKED AT A TIME */
     val isClicked = remember { mutableStateOf(false)}
     val icon = if (!isClicked.value) item.defaultIcon else item.clickedIcon
     Column(Modifier.width(150.dp)) {
-        Box(
+        Box( /* This box is for each menu row icon in the LazyRow */
             modifier = Modifier
                 .fillMaxHeight(0.75f)
                 .align(alignment = Alignment.CenterHorizontally)
-                .background(color = Color.Blue)
         ) {
             IconButton(
                 onClick = { isClicked.value = !isClicked.value},
@@ -290,7 +293,7 @@ fun MenuRowIcon(item: MenuIcon) {
                 )
             }
         }
-        Box(
+        Box( /* This is for the text underneath each menu LazyRow item */
             modifier = Modifier
                 .fillMaxHeight()
                 .align(alignment = Alignment.CenterHorizontally)
@@ -306,7 +309,6 @@ fun MenuRowIcon(item: MenuIcon) {
 
 @Composable
 fun MenuItemCard(item: MenuItem) {
-    val context = LocalContext.current
     var isClicked = remember { mutableStateOf(false) }
 
     if (isClicked.value) { /* Checks if menu item card is clicked. If it is it will display the Dialog with the item description */
@@ -323,20 +325,19 @@ fun MenuItemCard(item: MenuItem) {
                 .size(width = 210.dp, height = 220.dp)
                 .padding(4.dp)
                 .clickable(onClick = {
-//                    dialog.show()
                     isClicked.value = true
                 }) ,
             colors = CardDefaults.cardColors(
                 containerColor = Color.White
             ),
         ) {
-            Box(
+            Box( /* Box for the image for each menu item */
                 modifier = Modifier
                     .fillMaxHeight(0.5f)
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
-                    .background(color = Color.Magenta),
-                contentAlignment = Alignment.Center
+//                    .background(color = Color.Magenta),
+                ,contentAlignment = Alignment.Center
             ) {
                 Icon(
                     painter = painterResource(id = item.icon),
@@ -344,14 +345,16 @@ fun MenuItemCard(item: MenuItem) {
                     tint = Color.Unspecified,
                 )
             }
-            Box(
+            Box( /* Box for the text + price for each menu item */
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = Color.Yellow)
+//                    .background(color = Color.Yellow)
             ) {
-                Text(text = item.name + "\n$" + item.price)
+                val decimalFormat = DecimalFormat("#.00")
+                val formattedPrice = decimalFormat.format(item.price)
+                Text(text = item.name + "\n$" + formattedPrice)
             }
-            ElevatedButton(
+            ElevatedButton( /* Button to add item to cart */
                 onClick = {/*TODO THIS IS WHERE YOU ADD ITEM TO CART*/},
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -371,11 +374,12 @@ fun MenuItemCard(item: MenuItem) {
 
 @Composable
 fun displayItemDialog(item: MenuItem, isClicked: MutableState<Boolean>) { /* Will display the item description */
+    var itemQuantity by remember { mutableStateOf(1) }
     Dialog(onDismissRequest = { isClicked.value = false }) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(600.dp)
+                .height(720.dp)
                 .padding(16.dp),
             shape = RoundedCornerShape(16.dp),
         ) {
@@ -383,113 +387,125 @@ fun displayItemDialog(item: MenuItem, isClicked: MutableState<Boolean>) { /* Wil
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(0.1f)
-                    .background(color = Color.Cyan)
-            ){
-                Text(
-                    text = item.name,
+                    .background(color = Color.White),
+            ) {
+                Box(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .wrapContentSize(Alignment.Center),
-                    textAlign = TextAlign.Center,
-                )
-                /* TODO FIX THIS FUTURE ME. YOU NEED TO ADD A CLOSE BUTTON BUT HASNT BEEN WORKING IDK WHY COME TO THIS LATER */
-//                IconButton(onClick = {isClicked.value = false},
-//                    ) {
-//                    Icon(
-//                        imageVector = Icons.Default.Close,
-//                        contentDescription = "Remove Dialog"
-//                    )
-//                }
+                        .fillMaxWidth(0.9f)
+//                        .background(color = Color.Red)
+                ) {
+                    Text(
+                        text = item.name,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .wrapContentSize(Alignment.Center),
+                        textAlign = TextAlign.Center,
+                    )
+                }
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+//                        .background(color = Color.Blue)
+                        .fillMaxHeight()
+                ) {
+                    IconButton(
+                        onClick = { isClicked.value = false },
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = "Remove Dialog",
+                            tint = Color.Black
+                        )
+                    }
+                }
             }
 
             Box( /* Box for menu item image */
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.5f)
-                    .background(color = Color.Green),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = item.icon),
-                    contentDescription = item.name,
-                    modifier = Modifier.scale(1.5f)
-                )
-            }
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.5f)
+                        .background(color = Color.White),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = item.icon),
+                        contentDescription = item.name,
+                        modifier = Modifier.scale(1.5f)
+                    )
+                }
 
-            Box( /* Box for menu item description */
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.6f)
-                    .background(color = Color.Red),
-            ) {
-                Text(
-                    text = item.description,
-                    textAlign = TextAlign.Center,
-                )
-            }
+            Box(
+                    /* Box for menu item description */
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.6f)
+                        .background(color = Color.White),
+                ) {
+                    Text(
+                        text = item.description,
+                        textAlign = TextAlign.Center,
+                    )
+                }
 
-//            Box( /* Box for editing quantity of item for cart */
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .fillMaxHeight(0.7f)
-//                    .background(color = Color.Magenta),
-//                contentAlignment = Alignment.Center
-//            ) {
-//                IconButton(
-//                    onClick = { /*TODO UPDATE QUATITY IN SOME WAY. IDK HOW THIS WILL WORK YET I WILL IMPLEMENT*/ },
-////                    modifier = Modifier
-////                        .align(alignment = Alignment.Center)
-////                        .padding(12.dp)
-////                        .scale(2.5f)
-//                ) {
-//                    Icon(
-//                        painter = painterResource(id = R.drawable.remove),
-//                        contentDescription = "Remove",
-//                        tint = Color.Black
-//                    )
-//                }
-//
-//                Text(
-//                    text = "1"
-//                )
-//
-//                IconButton(
-//                    onClick = { /*TODO UPDATE QUATITY IN SOME WAY. IDK HOW THIS WILL WORK YET I WILL IMPLEMENT*/ },
-////                    modifier = Modifier
-////                        .align(alignment = Alignment.Center)
-////                        .padding(12.dp)
-////                        .scale(2.5f)
-//                ) {
-//                    Icon(
-//                        painter = painterResource(id = R.drawable.add),
-//                        contentDescription = "Add",
-//                        tint = Color.Black
-//                    )
-//                }
-//
-//            }
+            Row( /* Row for the item quantity */
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.62f)
+                        .background(color = Color.White),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+
+                ) {
+                    IconButton(
+                        onClick = { if (itemQuantity > 1) itemQuantity-- },
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.remove),
+                            contentDescription = "Remove",
+                            tint = Color.Black
+                        )
+                    }
+
+                    Text(
+                        text = "$itemQuantity",
+                        textAlign = TextAlign.Center
+                    )
+
+                    IconButton(
+                        onClick = { itemQuantity++ },
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.add),
+                            contentDescription = "Add",
+                            tint = Color.Black
+                        )
+                    }
+                }
 
             Box( /* Box for Add to cart button */
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .background(color = Color.Yellow),
-                contentAlignment = Alignment.Center
-            ) {
-                ElevatedButton( /*Add to cart button*/
-                    onClick = {/*TODO THIS IS WHERE YOU ADD ITEM TO CART*/},
                     modifier = Modifier
-                        .padding(4.dp)
-                        .fillMaxWidth(),
-                    shape = RoundedCornerShape(corner = CornerSize(8.dp)), /* Changes how rounded the corners are for the Add button */
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(id =R.color.burger_fuel_purple), /* Background color of the button */
-                        contentColor = Color.White /* Color of the text in the button */
-                    )
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .background(color = Color.White),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Text(text = "ADD - $${item.price}")
+                    ElevatedButton( /*Add to cart button*/
+                        onClick = {/*TODO THIS IS WHERE YOU ADD ITEM TO CART*/ },
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(corner = CornerSize(8.dp)), /* Changes how rounded the corners are for the Add button */
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colorResource(id = R.color.burger_fuel_purple), /* Background color of the button */
+                            contentColor = Color.White /* Color of the text in the button */
+                        )
+                    ) {
+                        val total = item.price * itemQuantity
+                        val decimalFormat = DecimalFormat("#.00")
+                        val formattedTotal = decimalFormat.format(total)
+                        Text(text = "ADD - $${formattedTotal}")
+                    }
                 }
             }
         }
-    }
 }
