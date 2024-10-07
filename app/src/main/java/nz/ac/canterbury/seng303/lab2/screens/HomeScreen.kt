@@ -63,7 +63,8 @@ fun Home(
 ) {
     val menuItems : List<MenuItem> = MenuItem.getMenuItems() /* Items for the scrollable grid for menu selection */
     val menuIcons : List<MenuIcon> = MenuIcon.getMenuIcons() /* Items for the scrollable row for filtering the menu */
-    val menuUiState by menuViewModel.uiState.collectAsState()
+    val menuUiState by menuViewModel.uiState.collectAsState() /* State of the menu. Changes on click of icon */
+    val isClicked = remember { mutableStateOf(false) } /* Items default as not clicked on */
     Column {
         LazyRow( /* This row is the left/right scrollable menu with icons to filter menu */
             horizontalArrangement = Arrangement.SpaceEvenly,
@@ -81,11 +82,10 @@ fun Home(
             modifier = Modifier
                 .background(Color.Black)
         ) {
-            menuItems.forEach { foodItem ->
+            val filteredMenu = menuItems.filter { it.type.contains(menuUiState.currentSelectedIcon.text) } /* Filter the menu so that only items that are relavant are passed into the LazyVerticalGrid */
+            filteredMenu.forEach { foodItem ->
                 item {
-                    if (foodItem.type.contains(menuUiState.currentSelectedIcon.text)) { /* Shows the default menu */
-                        MenuItemCard(foodItem)
-                    }
+                    MenuItemCard(foodItem)
                 }
             }
         }
@@ -96,14 +96,11 @@ fun Home(
 @Composable
 fun MenuRowIcon(item: MenuIcon, menuUiState: MenuUiState, menuViewModel: MenuViewModel) { /* TODO EDIT SO THAT ONLY ONE ICON CAN BE CLICKED AT A TIME */
     var icon: Int = item.defaultIcon
+
     if (item.text == menuUiState.currentSelectedIcon.text) { /* loads the default screen */
         icon = menuUiState.currentSelectedIcon.clickedIcon
     }
-    val isClicked = remember { mutableStateOf(false) } /* Items default as not clicked on */
-    if (isClicked.value) { /*TODO Logic that will unselect the previously selected icon */
-        menuViewModel.newSelectedIcon(item)
-        icon = item.clickedIcon
-    }
+
     Column(Modifier.width(150.dp)) {
         Box( /* This box is for each menu row icon in the LazyRow */
             modifier = Modifier
@@ -111,7 +108,7 @@ fun MenuRowIcon(item: MenuIcon, menuUiState: MenuUiState, menuViewModel: MenuVie
                 .align(alignment = Alignment.CenterHorizontally)
         ) {
             IconButton(
-                onClick = { isClicked.value = !isClicked.value},
+                onClick = { menuViewModel.newSelectedIcon(item)},
                 modifier = Modifier
                     .align(alignment = Alignment.Center)
                     .padding(12.dp)
