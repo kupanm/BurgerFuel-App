@@ -2,23 +2,17 @@ package nz.ac.canterbury.seng303.lab2
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.view.Menu
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -29,20 +23,13 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
-import nz.ac.canterbury.seng303.lab2.R
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -51,7 +38,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -60,7 +46,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -69,41 +54,32 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import nz.ac.canterbury.seng303.lab2.models.MenuIcon
 import nz.ac.canterbury.seng303.lab2.models.MenuItem
-import nz.ac.canterbury.seng303.lab2.models.MenuItem.Companion.getMenuItems
-import com.google.android.gms.location.FusedLocationProviderClient
-import nz.ac.canterbury.seng303.lab2.screens.CreateNote
-import nz.ac.canterbury.seng303.lab2.screens.EditNote
 import nz.ac.canterbury.seng303.lab2.screens.ItemCart
 import nz.ac.canterbury.seng303.lab2.screens.Locations
-import nz.ac.canterbury.seng303.lab2.screens.NoteCard
-import nz.ac.canterbury.seng303.lab2.screens.NoteGrid
-import nz.ac.canterbury.seng303.lab2.screens.NoteList
 import nz.ac.canterbury.seng303.lab2.screens.PastOrders
 import nz.ac.canterbury.seng303.lab2.screens.Profile
 import nz.ac.canterbury.seng303.lab2.ui.theme.Lab1Theme
-import nz.ac.canterbury.seng303.lab2.ui.theme.Purple40
-import nz.ac.canterbury.seng303.lab2.viewmodels.CreateNoteViewModel
-import nz.ac.canterbury.seng303.lab2.viewmodels.EditNoteViewModel
-import nz.ac.canterbury.seng303.lab2.viewmodels.NoteViewModel
+import nz.ac.canterbury.seng303.lab2.viewmodels.CartViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel as koinViewModel
 
 class MainActivity : ComponentActivity() {
 
-    private val noteViewModel: NoteViewModel by koinViewModel()
+    private val cartViewModel: CartViewModel by koinViewModel()
+
+
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        noteViewModel.loadDefaultNotesIfNoneExist()
+
+        // Load cart maybe? dont know wat actually loads it tbh
+        //cartViewModel.loadCart()
 
         setContent {
             Lab1Theme {
@@ -117,7 +93,7 @@ class MainActivity : ComponentActivity() {
                                 horizontalArrangement = Arrangement.Center,
                                 modifier = Modifier.scale(0.5f)) {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.borgorlogo),
+                                    painter = painterResource(id = R.drawable.borgor_logo),
                                     contentDescription = "BurgerFuel Logo",
                                     tint = Color.Unspecified
                                 )
@@ -131,10 +107,10 @@ class MainActivity : ComponentActivity() {
                                 }
                             },
                             actions = {
-                                IconButton(onClick = { /*TODO*/ }) {
+                                IconButton(onClick = { navController.navigate("ItemCart") }) {
                                     Icon(
                                         imageVector = Icons.Default.ShoppingCart,
-                                        contentDescription = "Cart"
+                                        contentDescription = "ItemCart"
                                     )
                                 }
                             }
@@ -182,13 +158,13 @@ class MainActivity : ComponentActivity() {
 
                         NavHost(navController = navController, startDestination = "Home") {
                             composable("Home") {
-                                Home(navController = navController)
+                                Home(navController = navController, cartView = cartViewModel)
                             }
                             composable("Locations") {
                                 Locations(navController = navController)
                             }
                             composable("ItemCart") {
-                                ItemCart(navController = navController)
+                                ItemCart(navController = navController, cartView = cartViewModel)
                             }
                             composable("Profile") {
                                 Profile(navController = navController)
@@ -197,52 +173,6 @@ class MainActivity : ComponentActivity() {
                                 PastOrders(navController = navController)
                             }
                         }
-
-                        /*
-                        //region Old Notes data
-                        val createNoteViewModel: CreateNoteViewModel = viewModel()
-                        val editNoteViewModel: EditNoteViewModel = viewModel()
-                        NavHost(navController = navController, startDestination = "Home") {
-                            composable("Home") {
-                                Home(navController = navController)
-                            }
-                            composable(
-                                "NoteCard/{noteId}",
-                                arguments = listOf(navArgument("noteId") {
-                                    type = NavType.StringType
-                                })
-                            ) { backStackEntry ->
-                                val noteId = backStackEntry.arguments?.getString("noteId")
-                                noteId?.let { noteIdParam: String -> NoteCard(noteIdParam, noteViewModel) }
-                            }
-                            composable("EditNote/{noteId}", arguments = listOf(navArgument("noteId") {
-                                type = NavType.StringType
-                            })
-                            ) { backStackEntry ->
-                                val noteId = backStackEntry.arguments?.getString("noteId")
-                                noteId?.let { noteIdParam: String -> EditNote(noteIdParam, editNoteViewModel, noteViewModel, navController = navController) }
-                            }
-                            composable("NoteList") {
-                                NoteList(navController, noteViewModel)
-                            }
-                            composable("NoteGrid") {
-                                NoteGrid(navController, noteViewModel)
-                            }
-                            composable("CreateNote") {
-                                CreateNote(navController = navController, title = createNoteViewModel.title,
-                                    onTitleChange = {newTitle ->
-                                        val title = newTitle.replace("badword", "*******")
-                                        createNoteViewModel.updateTitle(title)
-                                    },
-                                    content = createNoteViewModel.content, onContentChange = {newContent -> createNoteViewModel.updateContent(newContent)},
-                                    createNoteFn = {title, content -> noteViewModel.createNote(title, content)}
-                                )
-                                //CreateNoteStandAlone(navController = navController)
-                            }
-                        }
-                        // endregion
-
-                        */
                     }
                 }
             }
@@ -252,7 +182,7 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun Home(navController: NavController) {
+fun Home(navController: NavController, cartView: CartViewModel) {
     val menuItems : List<MenuItem> = MenuItem.getMenuItems()
     val menuIcons : List<MenuIcon> = MenuIcon.getMenuIcons()
     val (selectedIndex, setSelectedIndex) = remember { mutableStateOf(false) }
@@ -264,7 +194,7 @@ fun Home(navController: NavController) {
         ) {
             menuIcons.forEach { foodIcon ->
                 item {
-                    MenuRowIcon(foodIcon)
+                    MenuRowIcon(foodIcon, cartView)
                 }
             }
         }
@@ -274,7 +204,7 @@ fun Home(navController: NavController) {
             menuItems.forEach { foodItem ->
                 item {
                     if (foodItem.type == "Specials") {
-                        MenuItemCard(foodItem)
+                        MenuItemCard(foodItem, cartView)
                     }
                 }
             }
@@ -283,7 +213,7 @@ fun Home(navController: NavController) {
 }
 
 @Composable
-fun MenuRowIcon(item: MenuIcon) {
+fun MenuRowIcon(item: MenuIcon, cart: CartViewModel) {
     val context = LocalContext.current
     val isClicked = remember { mutableStateOf(false)}
     val icon = if (!isClicked.value) item.defaultIcon else item.clickedIcon
@@ -322,7 +252,7 @@ fun MenuRowIcon(item: MenuIcon) {
 }
 
 @Composable
-fun MenuItemCard(item: MenuItem) {
+fun MenuItemCard(item: MenuItem, cartView: CartViewModel) {
     val context = LocalContext.current
     val dialog: AlertDialog = displayItemDescription(item)
     Column(modifier = Modifier.background(Color.Black))
@@ -362,7 +292,7 @@ fun MenuItemCard(item: MenuItem) {
                 Text(text = item.name + "\n$" + item.price)
             }
             ElevatedButton(
-                onClick = {},
+                onClick = {cartView.addItem(item)},
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(4.dp)
