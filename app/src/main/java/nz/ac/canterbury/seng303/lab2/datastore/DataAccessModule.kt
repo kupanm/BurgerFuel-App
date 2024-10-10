@@ -8,8 +8,9 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.FlowPreview
-import nz.ac.canterbury.seng303.lab2.models.Note
-import nz.ac.canterbury.seng303.lab2.viewmodels.NoteViewModel
+import nz.ac.canterbury.seng303.lab2.models.MenuItem
+import nz.ac.canterbury.seng303.lab2.models.MenuStorageItem
+import nz.ac.canterbury.seng303.lab2.viewmodels.CartViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -19,11 +20,11 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 
 @FlowPreview
 val dataAccessModule = module {
-    single<Storage<Note>> {
+    single<Storage<MenuStorageItem>> {
         PersistentStorage(
             gson = get(),
-            type = object: TypeToken<List<Note>>(){}.type,
-            preferenceKey = stringPreferencesKey("notes"),
+            type = object: TypeToken<List<MenuStorageItem>>(){}.type,
+            preferenceKey = stringPreferencesKey("cart"),
             dataStore = androidContext().dataStore
         )
     }
@@ -31,8 +32,8 @@ val dataAccessModule = module {
     single { Gson() }
 
     viewModel {
-        NoteViewModel(
-            noteStorage = get()
+        CartViewModel(
+            cartStorage = get()
         )
     }
 }
