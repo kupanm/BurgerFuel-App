@@ -31,6 +31,8 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
@@ -68,8 +70,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.flow.MutableStateFlow
 import nz.ac.canterbury.seng303.lab2.models.MenuIcon
 import nz.ac.canterbury.seng303.lab2.models.MenuItem
+import nz.ac.canterbury.seng303.lab2.models.MenuStorageItem
 import nz.ac.canterbury.seng303.lab2.screens.Home
 import nz.ac.canterbury.seng303.lab2.screens.ItemCart
 import nz.ac.canterbury.seng303.lab2.screens.Locations
@@ -93,7 +97,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         // Load cart maybe? dont know wat actually loads it tbh
-        //cartViewModel.loadCart()
+        cartViewModel.getCartItems()
 
         setContent {
             Lab1Theme {
@@ -121,11 +125,33 @@ class MainActivity : ComponentActivity() {
                                 }
                             },
                             actions = {
-                                IconButton(onClick = { navController.navigate("ItemCart") }) {
-                                    Icon(
-                                        imageVector = Icons.Default.ShoppingCart,
-                                        contentDescription = "ItemCart"
+
+                                Box() {
+
+                                    IconButton(onClick = { navController.navigate("ItemCart") }) {
+                                        Icon(
+                                            imageVector = Icons.Default.ShoppingCart,
+                                            contentDescription = "ItemCart"
+                                        )
+                                    }
+
+
+                                    // Get the amount of items in the cart
+                                    val cartItems: List<MenuStorageItem> by cartViewModel.cartItems.collectAsState(
+                                        emptyList()
                                     )
+                                    val totalSize = cartItems.sumOf { it.amount }
+
+
+                                    if (totalSize > 0) {
+                                        Badge(
+                                            modifier = Modifier.align(Alignment.TopEnd),
+                                            containerColor = Color.Red,
+                                            contentColor = Color.White
+                                        ) {
+                                            Text("$totalSize")
+                                        }
+                                    }
                                 }
                             }
                         )
@@ -161,6 +187,7 @@ class MainActivity : ComponentActivity() {
                                             imageVector = Icons.Default.Person,
                                             contentDescription = "Profile",
                                         )
+
                                     }
                                 }
                             }

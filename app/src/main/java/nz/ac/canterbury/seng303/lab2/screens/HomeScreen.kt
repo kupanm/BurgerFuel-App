@@ -188,7 +188,7 @@ fun MenuItemCard(item: MenuItem, cartViewModel: CartViewModel) {
                 Text(text = item.name + "\n$" + formattedPrice)
             }
             ElevatedButton( /* Button to add item to cart */
-                onClick = {/*TODO THIS IS WHERE YOU ADD ITEM TO CART*/},
+                onClick = {cartViewModel.addItem(item)},
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(4.dp)
@@ -207,7 +207,7 @@ fun MenuItemCard(item: MenuItem, cartViewModel: CartViewModel) {
 
 @Composable
 fun displayItemDialog(item: MenuItem, isClicked: MutableState<Boolean>, cartViewModel: CartViewModel) { /* Will display the item description */
-    //var itemQuantity by remember { mutableStateOf(item.amount) }
+    var itemQuantity by remember { mutableStateOf(item.amount) }
     Dialog(onDismissRequest = { isClicked.value = false }) {
         Card(
             modifier = Modifier
@@ -291,7 +291,10 @@ fun displayItemDialog(item: MenuItem, isClicked: MutableState<Boolean>, cartView
 
             ) {
                 IconButton(
-                    onClick = { item.dec() },
+                    onClick = { item.dec()
+                              if(itemQuantity > 1){
+                                  itemQuantity--
+                              }},
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.remove),
@@ -301,12 +304,13 @@ fun displayItemDialog(item: MenuItem, isClicked: MutableState<Boolean>, cartView
                 }
 
                 Text(
-                    text = "${item.amount.value}",
+                    text = "${itemQuantity}",
                     textAlign = TextAlign.Center
                 )
 
                 IconButton(
-                    onClick = { item.inc() },
+                    onClick = { item.inc()
+                        itemQuantity++},
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.add),
@@ -336,7 +340,7 @@ fun displayItemDialog(item: MenuItem, isClicked: MutableState<Boolean>, cartView
                         contentColor = Color.White /* Color of the text in the button */
                     )
                 ) {
-                    val total = item.price * item.amount.value
+                    val total = item.price * itemQuantity
                     val decimalFormat = DecimalFormat("#.00")
                     val formattedTotal = decimalFormat.format(total)
                     Text(text = "ADD - $${formattedTotal}")
