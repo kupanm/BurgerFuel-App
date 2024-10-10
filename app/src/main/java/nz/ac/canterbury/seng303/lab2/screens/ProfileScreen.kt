@@ -183,7 +183,7 @@ fun Profile(navController: NavController)
                     )
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        "Contact",
+                        text = "Contact",
                         color = Color.Black,
                         style = textSize
                     )
