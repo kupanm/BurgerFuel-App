@@ -56,6 +56,7 @@ import androidx.navigation.NavController
 import nz.ac.canterbury.seng303.lab2.R
 import nz.ac.canterbury.seng303.lab2.models.MenuIcon
 import nz.ac.canterbury.seng303.lab2.models.MenuItem
+import nz.ac.canterbury.seng303.lab2.util.NotificationHelper
 import nz.ac.canterbury.seng303.lab2.viewmodels.CartViewModel
 import nz.ac.canterbury.seng303.lab2.viewmodels.MenuUiState
 import nz.ac.canterbury.seng303.lab2.viewmodels.MenuViewModel
@@ -66,7 +67,8 @@ fun Home(
     navController: NavController,
     cartViewModel: CartViewModel,
     menuViewModel: MenuViewModel = viewModel(),
-    settingViewModel: SettingViewModel
+    settingViewModel: SettingViewModel,
+    notificationHelper: NotificationHelper
 ) {
     val isDarkMode by settingViewModel.isDarkMode.collectAsState()
     val backgroundColor = if (isDarkMode) {
@@ -109,7 +111,13 @@ fun Home(
             val filteredMenu = menuItems.filter { it.type.contains(menuUiState.currentSelectedIcon.text) } /* Filter the menu so that only items that are relavant are passed into the LazyVerticalGrid */
             filteredMenu.forEach { foodItem ->
                 item {
-                    MenuItemCard(foodItem, cartViewModel, textColor, backgroundColor)
+                    MenuItemCard(
+                        foodItem,
+                        cartViewModel,
+                        textColor,
+                        backgroundColor,
+                        notificationHelper
+                        )
                 }
             }
         }
@@ -162,7 +170,13 @@ fun MenuRowIcon(item: MenuIcon, menuUiState: MenuUiState, menuViewModel: MenuVie
 }
 
 @Composable
-fun MenuItemCard(item: MenuItem, cartViewModel: CartViewModel, textColor: Color, backgroundColor: Color) {
+fun MenuItemCard(
+    item: MenuItem,
+    cartViewModel: CartViewModel,
+    textColor: Color,
+    backgroundColor: Color,
+    notificationHelper: NotificationHelper
+) {
     var isClicked = remember { mutableStateOf(false) }
 
     if (isClicked.value) { /* Checks if menu item card is clicked. If it is it will display the Dialog with the item description */
@@ -214,7 +228,12 @@ fun MenuItemCard(item: MenuItem, cartViewModel: CartViewModel, textColor: Color,
                     )
             }
             ElevatedButton( /* Button to add item to cart */
-                onClick = {cartViewModel.addItem(item)},
+                onClick = {
+                    cartViewModel.addItem(item)
+                    val decimalFormat = DecimalFormat("#.00")
+                    val formattedPrice = decimalFormat.format(item.price)
+                    notificationHelper.createNotification(notificationTitle = "Item Added To Cart", notificationDesc = "1x " + item.name + " $"+formattedPrice)
+                          },
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(4.dp)
