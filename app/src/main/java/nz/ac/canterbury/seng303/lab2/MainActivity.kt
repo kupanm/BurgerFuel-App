@@ -74,6 +74,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import nz.ac.canterbury.seng303.lab2.models.MenuIcon
 import nz.ac.canterbury.seng303.lab2.models.MenuItem
 import nz.ac.canterbury.seng303.lab2.models.MenuStorageItem
+import nz.ac.canterbury.seng303.lab2.screens.ContactScreen
 import nz.ac.canterbury.seng303.lab2.screens.Home
 import nz.ac.canterbury.seng303.lab2.screens.ItemCart
 import nz.ac.canterbury.seng303.lab2.screens.Locations
@@ -212,8 +213,8 @@ class MainActivity : ComponentActivity() {
                             composable("PastOrders") {
                                 PastOrders(navController = navController)
                             }
-                            composable("Cart") {
-                                ItemCart(navController = navController)
+                            composable("Contact") {
+                                ContactScreen(navController = navController)
                             }
                         }
                     }
