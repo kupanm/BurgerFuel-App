@@ -1,6 +1,5 @@
 package nz.ac.canterbury.seng303.lab2.screens
 
-import android.graphics.Paint.Align
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,9 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -61,22 +57,21 @@ fun ItemCart(navController: NavController, cartView: CartViewModel, settingViewM
             .background(backgroundColor)
     ){
         items(cartItems) { food ->
-            CartRow(navController = navController, food = food, deleteFn = {id: Int -> cartView.deleteNoteById(id) })
+            CartRow(navController = navController, food = food, deleteFn = {id: Int -> cartView.deleteCartById(id) }, addFn = {id: Int -> cartView.addSingleCartItem(id)})
         }
     }
 }
 
 
 @Composable
-fun CartRow(navController: NavController, food: MenuStorageItem, deleteFn: (id: Int) -> Unit)
+fun CartRow(navController: NavController, food: MenuStorageItem, deleteFn: (id: Int) -> Unit, addFn: (id: Int) -> Unit)
 {
     var itemQuantity by remember { mutableStateOf(food.amount) }
 
     Row(modifier = Modifier
         .fillMaxWidth()
         .height(100.dp)
-        .padding(8.dp)
-        .background(Color.Cyan)) {
+        .padding(8.dp)) {
 
         Row (modifier = Modifier.fillMaxWidth(0.5f)){
 
@@ -84,7 +79,6 @@ fun CartRow(navController: NavController, food: MenuStorageItem, deleteFn: (id: 
             Box(
                 modifier = Modifier
                     .align(Alignment.Top)
-                    .background(Color.Magenta)
             ) {
 
 
@@ -110,16 +104,13 @@ fun CartRow(navController: NavController, food: MenuStorageItem, deleteFn: (id: 
 
             Box(
                 contentAlignment = Alignment.CenterEnd, modifier = Modifier
-                    .background(Color.Blue)
             ) {
 
                 IconButton(onClick = {
-                    if(food.amount <= 1) {
                         deleteFn(food.id)
-                    } else {
                         food.amount--
                         itemQuantity--
-                    }
+
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.remove),
@@ -135,10 +126,10 @@ fun CartRow(navController: NavController, food: MenuStorageItem, deleteFn: (id: 
             )
 
             Box(
-                contentAlignment = Alignment.CenterEnd,
-                modifier = Modifier.background(Color.Blue)
+                contentAlignment = Alignment.CenterEnd
             ) {
                 IconButton(onClick = {
+                    addFn(food.id)
                     food.amount++
                     itemQuantity++
                 }) {

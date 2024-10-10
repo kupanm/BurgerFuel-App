@@ -3,7 +3,6 @@ package nz.ac.canterbury.seng303.lab2.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -49,7 +48,10 @@ class CartViewModel(
 
 
     fun addItem(item : MenuItem) = viewModelScope.launch {
-        val menuStorageItem = MenuStorageItem(
+
+        val foundItem = _cartItems.first().find { it.id == item.id }
+
+        var menuStorageItem = MenuStorageItem(
             id = item.id,
             amount = item.amount,
             icon = item.icon,
@@ -58,19 +60,61 @@ class CartViewModel(
             price = item.price
         )
 
-        cartStorage.insert(menuStorageItem).catch {
-            Log.e("CART_VIEW_MODEL", "Could not insert cart item")
-        }.collect()
-        cartStorage.getAll().catch { Log.e("CART_VIEW_MODEL", it.toString()) }
-            .collect{_cartItems.emit(it)}
-    }
+        if(foundItem != null) {
+            menuStorageItem.amount += foundItem.amount
 
-    fun deleteNoteById(cartId: Int?) = viewModelScope.launch {
-        Log.d("CART_VIEW_MODEL", "Deleting item: $cartId")
-        if (cartId != null) {
-            cartStorage.delete(cartId).collect()
+            cartStorage.edit(item.id, menuStorageItem).collect()
             cartStorage.getAll().catch { Log.e("CART_VIEW_MODEL", it.toString()) }
                 .collect { _cartItems.emit(it) }
+        } else {
+
+            cartStorage.insert(menuStorageItem).catch {
+                Log.e("CART_VIEW_MODEL", "Could not insert cart item")
+            }.collect()
+            cartStorage.getAll().catch { Log.e("CART_VIEW_MODEL", it.toString()) }
+                .collect { _cartItems.emit(it) }
+
+
+        }
+    }
+
+    fun addSingleCartItem(cartId: Int?) = viewModelScope.launch {
+
+        val foundItem = _cartItems.first().find { it.id == cartId }
+
+        if (foundItem != null) {
+            //foundItem.amount ++
+
+            cartStorage.edit(foundItem.id, foundItem).collect()
+            cartStorage.getAll().catch { Log.e("CART_VIEW_MODEL", it.toString()) }
+                .collect { _cartItems.emit(it) }
+        } else {
+            Log.e("CART_VIEW_MODEL", "Item not in cart")
+        }
+    }
+
+
+    fun deleteCartById(cartId: Int?) = viewModelScope.launch {
+        Log.d("CART_VIEW_MODEL", "Deleting item: $cartId")
+
+
+        if (cartId != null) {
+            val foundItem = _cartItems.first().find { it.id == cartId }
+
+            // Check that item is in the cart
+            if(foundItem != null) {
+                // check if item needs to be removed or edited
+                if(foundItem.amount <= 1) {
+
+                    cartStorage.delete(cartId).collect()
+                    cartStorage.getAll().catch { Log.e("CART_VIEW_MODEL", it.toString()) }
+                        .collect { _cartItems.emit(it) }
+                } else {
+                    cartStorage.edit(foundItem.id, foundItem).collect()
+                    cartStorage.getAll().catch { Log.e("CART_VIEW_MODEL", it.toString()) }
+                        .collect { _cartItems.emit(it) }
+                }
+            }
         }
     }
 }
