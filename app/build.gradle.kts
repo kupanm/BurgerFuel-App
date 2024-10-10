@@ -77,6 +77,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.9")
     implementation("io.insert-koin:koin-android:3.1.4")
 
+
     // Location services
     implementation("com.google.android.gms:play-services-location:21.3.0")
 
