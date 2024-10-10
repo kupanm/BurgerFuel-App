@@ -1,6 +1,7 @@
 package nz.ac.canterbury.seng303.lab2
 
 import android.app.AlertDialog
+import android.icu.text.DecimalFormat
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -14,15 +15,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
@@ -40,8 +44,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -54,18 +62,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import nz.ac.canterbury.seng303.lab2.models.MenuIcon
 import nz.ac.canterbury.seng303.lab2.models.MenuItem
+import nz.ac.canterbury.seng303.lab2.screens.Home
 import nz.ac.canterbury.seng303.lab2.screens.ItemCart
 import nz.ac.canterbury.seng303.lab2.screens.Locations
 import nz.ac.canterbury.seng303.lab2.screens.PastOrders
 import nz.ac.canterbury.seng303.lab2.screens.Profile
 import nz.ac.canterbury.seng303.lab2.ui.theme.Lab1Theme
-import nz.ac.canterbury.seng303.lab2.viewmodels.CartViewModel
+import nz.ac.canterbury.seng303.lab2.viewmodels.MenuViewModel
+import nz.ac.canterbury.seng303.lab2.viewmodels.NoteViewModel
+import kotlin.math.roundToInt
 import org.koin.androidx.viewmodel.ext.android.viewModel as koinViewModel
 
 class MainActivity : ComponentActivity() {
@@ -88,7 +101,7 @@ class MainActivity : ComponentActivity() {
                     topBar =  {
                         // Add your AppBar content here
                         TopAppBar(
-                            colors = TopAppBarDefaults.topAppBarColors(containerColor = Yellow),
+//                            colors = TopAppBarDefaults.topAppBarColors(containerColor = Yellow),
                             title = { Row(verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Center,
                                 modifier = Modifier.scale(0.5f)) {
@@ -178,148 +191,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
-
-
-@Composable
-fun Home(navController: NavController, cartView: CartViewModel) {
-    val menuItems : List<MenuItem> = MenuItem.getMenuItems()
-    val menuIcons : List<MenuIcon> = MenuIcon.getMenuIcons()
-    val (selectedIndex, setSelectedIndex) = remember { mutableStateOf(false) }
-    Column {
-        LazyRow( /* This row is the left/right scrollable menu with icons to filter menu */
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier
-                .fillMaxHeight(0.25f) /*Changes the height of lazy row*/
-        ) {
-            menuIcons.forEach { foodIcon ->
-                item {
-                    MenuRowIcon(foodIcon, cartView)
-                }
-            }
-        }
-        LazyVerticalGrid( /* This vertical grid is the up/down scrollable menu with cards for relevant menu items */
-            columns = GridCells.Fixed(2)
-        ) {
-            menuItems.forEach { foodItem ->
-                item {
-                    if (foodItem.type == "Specials") {
-                        MenuItemCard(foodItem, cartView)
-                    }
-                }
-            }
-        }
-        }
-}
-
-@Composable
-fun MenuRowIcon(item: MenuIcon, cart: CartViewModel) {
-    val context = LocalContext.current
-    val isClicked = remember { mutableStateOf(false)}
-    val icon = if (!isClicked.value) item.defaultIcon else item.clickedIcon
-    Column(Modifier.width(150.dp)) {
-        Box(
-            modifier = Modifier
-                .fillMaxHeight(0.75f)
-                .align(alignment = Alignment.CenterHorizontally)
-        ) {
-            IconButton(
-                onClick = { isClicked.value = !isClicked.value},
-                modifier = Modifier
-                    .align(alignment = Alignment.Center)
-                    .padding(12.dp)
-            ) {
-                Icon(
-                    painter = painterResource(id = icon),
-                    contentDescription = item.text,
-                    tint = Color.Unspecified,
-                    modifier = Modifier.scale(2.5f)
-                )
-            }
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxHeight()
-                .align(alignment = Alignment.CenterHorizontally)
-        ) {
-            Text(
-                text = item.text,
-                textAlign = TextAlign.Center,
-                maxLines = 2,
-            )
-        }
-    }
-}
-
-@Composable
-fun MenuItemCard(item: MenuItem, cartView: CartViewModel) {
-    val context = LocalContext.current
-    val dialog: AlertDialog = displayItemDescription(item)
-    Column(modifier = Modifier.background(Color.Black))
-    {
-        ElevatedCard(
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            ),
-            modifier = Modifier
-                .size(width = 210.dp, height = 220.dp)
-                .padding(4.dp)
-                .clickable(onClick = {
-                    dialog.show()
-                }) ,
-            colors = CardDefaults.cardColors(
-                containerColor = Color.White
-            ),
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxHeight(0.5f)
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
-                    .background(color = Color.Magenta),
-            ) {
-                Icon(
-                    painter = painterResource(id = item.icon),
-                    contentDescription = item.name,
-                    tint = Color.Unspecified,
-                )
-            }
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = Color.Yellow)
-            ) {
-                Text(text = item.name + "\n$" + item.price)
-            }
-            ElevatedButton(
-                onClick = {cartView.addItem(item)},
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(4.dp)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(corner = CornerSize(4.dp)), /* Changes how rounded the corners are for the Add button */
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(id =R.color.burger_fuel_purple), /* Background color of the button */
-                    contentColor = Color.White /* Color of the text in the button */
-                )
-            ) {
-                Text(text = "ADD")
-            }
-        }
-    }
-}
-
-@Composable
-fun displayItemDescription(item: MenuItem): AlertDialog {
-    val context = LocalContext.current
-    val imageView = ImageView(context)
-    imageView.setImageResource(item.icon)
-    imageView.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-    val layout = LinearLayout(context)
-    layout.orientation = LinearLayout.VERTICAL
-    layout.addView(imageView)
-    val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-    builder.setTitle(item.name).setView(layout)
-    val dialog: AlertDialog = builder.create()
-    return dialog
 }
