@@ -134,7 +134,7 @@ fun ContactScreen(
         Button(
             onClick = {
                 val intent = Intent(Intent.ACTION_SEND).apply {
-                    data = Uri.parse("mailto:dmo118@uclive.ac.nz") // Only email apps handle this.
+                    data = Uri.parse("mailto:info@burgerfuel.com")
                     putExtra(Intent.EXTRA_SUBJECT, "Text")
                 }
                 if (intent.resolveActivity(context.packageManager) != null) {
@@ -187,7 +187,7 @@ fun ContactScreen(
 
                     context.startActivity(targetIntent)
                 },
-            contentAlignment = Alignment.Center // Align text in the center
+            contentAlignment = Alignment.Center
         ) {
             Text(
                 text = "Open BurgerFuel Website",
