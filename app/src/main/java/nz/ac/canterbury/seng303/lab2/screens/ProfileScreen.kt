@@ -121,7 +121,7 @@ fun Profile(navController: NavController)
         ){
             // Settings Button
             Button(
-                onClick = { /* Handle Click */},
+                onClick = { navController.navigate("Settings")},
                 shape = RoundedCornerShape(0.dp),
                 contentPadding = PaddingValues(0.dp),
                 colors = ButtonDefaults.buttonColors(
@@ -156,7 +156,7 @@ fun Profile(navController: NavController)
             }
             // Contact Button
             Button(
-                onClick = { navController.navigate("Contact")},
+                onClick = { navController.navigate("Contact") },
                 shape = RoundedCornerShape(0.dp),
                 contentPadding = PaddingValues(0.dp),
                 colors = ButtonDefaults.buttonColors(
@@ -191,7 +191,7 @@ fun Profile(navController: NavController)
             }
             // Allergy Button
             Button(
-                onClick = { /* Handle Click */},
+                onClick = { navController.navigate("Allergy") },
                 shape = RoundedCornerShape(0.dp),
                 contentPadding = PaddingValues(0.dp),
                 colors = ButtonDefaults.buttonColors(
