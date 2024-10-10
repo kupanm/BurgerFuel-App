@@ -125,7 +125,6 @@ class MainActivity : ComponentActivity() {
                                 }
                             },
                             actions = {
-
                                 Box() {
 
                                     IconButton(onClick = { navController.navigate("ItemCart") }) {
@@ -212,6 +211,9 @@ class MainActivity : ComponentActivity() {
                             }
                             composable("PastOrders") {
                                 PastOrders(navController = navController)
+                            }
+                            composable("Cart") {
+                                ItemCart(navController = navController)
                             }
                         }
                     }
