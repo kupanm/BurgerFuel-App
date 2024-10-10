@@ -156,7 +156,7 @@ fun Profile(navController: NavController)
             }
             // Contact Button
             Button(
-                onClick = { /* Handle Click */},
+                onClick = { navController.navigate("Contact")},
                 shape = RoundedCornerShape(0.dp),
                 contentPadding = PaddingValues(0.dp),
                 colors = ButtonDefaults.buttonColors(
