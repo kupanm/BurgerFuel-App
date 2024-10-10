@@ -1,5 +1,6 @@
 package nz.ac.canterbury.seng303.lab2
 
+import SettingScreen
 import android.app.AlertDialog
 import android.icu.text.DecimalFormat
 import android.os.Bundle
@@ -85,18 +86,20 @@ import nz.ac.canterbury.seng303.lab2.ui.theme.Lab1Theme
 import nz.ac.canterbury.seng303.lab2.viewmodels.CartViewModel
 import nz.ac.canterbury.seng303.lab2.viewmodels.MenuViewModel
 import nz.ac.canterbury.seng303.lab2.viewmodels.NoteViewModel
+import nz.ac.canterbury.seng303.lab2.viewmodels.SettingViewModel
 import kotlin.math.roundToInt
 import org.koin.androidx.viewmodel.ext.android.viewModel as koinViewModel
 
 class MainActivity : ComponentActivity() {
 
     private val cartViewModel: CartViewModel by koinViewModel()
-
+    val settingViewModel: SettingViewModel = SettingViewModel()
 
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         // Load cart maybe? dont know wat actually loads it tbh
         cartViewModel.getCartItems()
@@ -104,11 +107,23 @@ class MainActivity : ComponentActivity() {
         setContent {
             Lab1Theme {
                 val navController = rememberNavController()
+                val isDarkMode by settingViewModel.isDarkMode.collectAsState()
+                val backgroundColor = if (isDarkMode) {
+                    colorResource(id = R.color.black)
+                } else {
+                    colorResource(id = R.color.white)
+                }
+
+                val textColor = if (isDarkMode) {
+                    colorResource(id = R.color.white)
+                } else {
+                    colorResource(id = R.color.black)
+                }
                 Scaffold(
                     topBar =  {
                         // Add your AppBar content here
                         TopAppBar(
-//                            colors = TopAppBarDefaults.topAppBarColors(containerColor = Yellow),
+                            colors = TopAppBarDefaults.topAppBarColors(containerColor = backgroundColor),
                             title = { Row(verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Center,
                                 modifier = Modifier.scale(0.5f)) {
@@ -119,10 +134,11 @@ class MainActivity : ComponentActivity() {
                                 )
                             } },
                             navigationIcon = {
-                                IconButton(onClick = { navController.popBackStack() }) {
+                                IconButton(onClick = { navController.navigate("Locations") }) {
                                     Icon(
                                         imageVector = Icons.Default.LocationOn,
-                                        contentDescription = "Location"
+                                        contentDescription = "Location",
+                                        tint = textColor
                                     )
                                 }
                             },
@@ -132,7 +148,8 @@ class MainActivity : ComponentActivity() {
                                     IconButton(onClick = { navController.navigate("ItemCart") }) {
                                         Icon(
                                             imageVector = Icons.Default.ShoppingCart,
-                                            contentDescription = "ItemCart"
+                                            contentDescription = "ItemCart",
+                                            tint = textColor
                                         )
                                     }
 
@@ -159,7 +176,7 @@ class MainActivity : ComponentActivity() {
                     },
                     bottomBar = {
                         BottomAppBar( /*This is the bottom navigation bar for the app*/
-                            containerColor = Color.Transparent,
+                            containerColor = backgroundColor,
                             content = {
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
@@ -169,24 +186,28 @@ class MainActivity : ComponentActivity() {
                                         Icon(
                                             imageVector = Icons.Default.Home,
                                             contentDescription = "Home",
+                                            tint = textColor
                                         )
                                     }
                                     IconButton(onClick = { navController.navigate("Locations") }) {
                                         Icon(
                                             imageVector = Icons.Default.LocationOn,
                                             contentDescription = "Location",
+                                            tint = textColor
                                         )
                                     }
                                     IconButton(onClick = { navController.navigate("PastOrders") }) {
                                         Icon(
                                             imageVector = ImageVector.vectorResource(id = R.drawable.receipt_24dp_e8eaed_fill0_wght400_grad0_opsz24),
-                                            contentDescription = "PastOrder"
+                                            contentDescription = "PastOrder",
+                                            tint = textColor
                                         )
                                     }
                                     IconButton(onClick = { navController.navigate("Profile") }) {
                                         Icon(
                                             imageVector = Icons.Default.Person,
                                             contentDescription = "Profile",
+                                            tint = textColor
                                         )
 
                                     }
@@ -200,16 +221,16 @@ class MainActivity : ComponentActivity() {
 
                         NavHost(navController = navController, startDestination = "Home") {
                             composable("Home") {
-                                Home(navController = navController, cartViewModel = cartViewModel)
+                                Home(navController = navController, cartViewModel = cartViewModel, settingViewModel = settingViewModel)
                             }
                             composable("Locations") {
                                 Locations(navController = navController)
                             }
                             composable("ItemCart") {
-                                ItemCart(navController = navController, cartView = cartViewModel)
+                                ItemCart(navController = navController, cartView = cartViewModel, settingViewModel = settingViewModel)
                             }
                             composable("Profile") {
-                                Profile(navController = navController)
+                                Profile(navController = navController, settingViewModel = settingViewModel)
                             }
                             composable("PastOrders") {
                                 PastOrders(navController = navController)
@@ -221,7 +242,7 @@ class MainActivity : ComponentActivity() {
                                 AllergyScreen(navController = navController)
                             }
                             composable("Settings") {
-//                                AllergyScreen(navController = navController)
+                                SettingScreen(navController = navController, settingViewModel = settingViewModel)
                             }
                         }
                     }

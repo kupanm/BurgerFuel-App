@@ -30,6 +30,8 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.MailOutline
 import androidx.compose.material.icons.outlined.List
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,17 +42,36 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalMapOf
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import nz.ac.canterbury.seng303.lab2.R
+import nz.ac.canterbury.seng303.lab2.viewmodels.SettingViewModel
 
 @Composable
-fun Profile(navController: NavController)
+fun Profile(navController: NavController, settingViewModel: SettingViewModel)
 {
+
+    val isDarkMode by settingViewModel.isDarkMode.collectAsState()
+    val backgroundColorMain = if (isDarkMode) {
+        colorResource(id = R.color.black)
+    } else {
+        colorResource(id = R.color.white)
+    }
+
+    val textColor = if (isDarkMode) {
+        colorResource(id = R.color.white)
+    } else {
+        colorResource(id = R.color.black)
+    }
+
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(backgroundColorMain),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         val gradientBrush = Brush.linearGradient(
             colors = listOf(
@@ -60,6 +81,7 @@ fun Profile(navController: NavController)
             start = Offset(0f, 1000f),
             end = Offset(1000f, 0f)
         )
+
         Spacer(modifier = Modifier.height(10.dp).fillMaxWidth())
         Column(
             modifier = Modifier
@@ -149,7 +171,7 @@ fun Profile(navController: NavController)
                     Spacer(Modifier.height(4.dp))
                     Text(
                         "Settings",
-                        color = Color.Black,
+                        color = textColor,
                         style = textSize
                     )
                 }
@@ -184,7 +206,7 @@ fun Profile(navController: NavController)
                     Spacer(Modifier.height(4.dp))
                     Text(
                         text = "Contact",
-                        color = Color.Black,
+                        color = textColor,
                         style = textSize
                     )
                 }
@@ -219,7 +241,7 @@ fun Profile(navController: NavController)
                     Spacer(Modifier.height(4.dp))
                     Text(
                         "Allergy",
-                        color = Color.Black,
+                        color = textColor,
                         style = textSize
                     )
                 }
