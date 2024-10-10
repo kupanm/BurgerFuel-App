@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +14,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -35,7 +33,6 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ElevatedCard
@@ -86,12 +83,16 @@ import org.koin.androidx.viewmodel.ext.android.viewModel as koinViewModel
 
 class MainActivity : ComponentActivity() {
 
-    private val noteViewModel: NoteViewModel by koinViewModel()
+    private val cartViewModel: CartViewModel by koinViewModel()
+
+
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        noteViewModel.loadDefaultNotesIfNoneExist()
+
+        // Load cart maybe? dont know wat actually loads it tbh
+        //cartViewModel.loadCart()
 
         setContent {
             Lab1Theme {
@@ -119,11 +120,10 @@ class MainActivity : ComponentActivity() {
                                 }
                             },
                             actions = {
-                                IconButton(onClick = { /*TODO*/ }) {
+                                IconButton(onClick = { navController.navigate("ItemCart") }) {
                                     Icon(
                                         imageVector = Icons.Default.ShoppingCart,
-                                        contentDescription = "Cart",
-                                        tint = Color.Black
+                                        contentDescription = "ItemCart"
                                     )
                                 }
                             }
@@ -171,13 +171,13 @@ class MainActivity : ComponentActivity() {
 
                         NavHost(navController = navController, startDestination = "Home") {
                             composable("Home") {
-                                Home(navController = navController)
+                                Home(navController = navController, cartView = cartViewModel)
                             }
                             composable("Locations") {
                                 Locations(navController = navController)
                             }
                             composable("ItemCart") {
-                                ItemCart(navController = navController)
+                                ItemCart(navController = navController, cartView = cartViewModel)
                             }
                             composable("Profile") {
                                 Profile(navController = navController)
@@ -186,52 +186,6 @@ class MainActivity : ComponentActivity() {
                                 PastOrders(navController = navController)
                             }
                         }
-
-                        /*
-                        //region Old Notes data
-                        val createNoteViewModel: CreateNoteViewModel = viewModel()
-                        val editNoteViewModel: EditNoteViewModel = viewModel()
-                        NavHost(navController = navController, startDestination = "Home") {
-                            composable("Home") {
-                                Home(navController = navController)
-                            }
-                            composable(
-                                "NoteCard/{noteId}",
-                                arguments = listOf(navArgument("noteId") {
-                                    type = NavType.StringType
-                                })
-                            ) { backStackEntry ->
-                                val noteId = backStackEntry.arguments?.getString("noteId")
-                                noteId?.let { noteIdParam: String -> NoteCard(noteIdParam, noteViewModel) }
-                            }
-                            composable("EditNote/{noteId}", arguments = listOf(navArgument("noteId") {
-                                type = NavType.StringType
-                            })
-                            ) { backStackEntry ->
-                                val noteId = backStackEntry.arguments?.getString("noteId")
-                                noteId?.let { noteIdParam: String -> EditNote(noteIdParam, editNoteViewModel, noteViewModel, navController = navController) }
-                            }
-                            composable("NoteList") {
-                                NoteList(navController, noteViewModel)
-                            }
-                            composable("NoteGrid") {
-                                NoteGrid(navController, noteViewModel)
-                            }
-                            composable("CreateNote") {
-                                CreateNote(navController = navController, title = createNoteViewModel.title,
-                                    onTitleChange = {newTitle ->
-                                        val title = newTitle.replace("badword", "*******")
-                                        createNoteViewModel.updateTitle(title)
-                                    },
-                                    content = createNoteViewModel.content, onContentChange = {newContent -> createNoteViewModel.updateContent(newContent)},
-                                    createNoteFn = {title, content -> noteViewModel.createNote(title, content)}
-                                )
-                                //CreateNoteStandAlone(navController = navController)
-                            }
-                        }
-                        // endregion
-
-                        */
                     }
                 }
             }
