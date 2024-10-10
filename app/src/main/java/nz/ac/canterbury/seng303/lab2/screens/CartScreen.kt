@@ -29,20 +29,37 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import nz.ac.canterbury.seng303.lab2.R
 import nz.ac.canterbury.seng303.lab2.models.MenuStorageItem
 import nz.ac.canterbury.seng303.lab2.viewmodels.CartViewModel
+import nz.ac.canterbury.seng303.lab2.viewmodels.SettingViewModel
 
 
 @Composable
-fun ItemCart(navController: NavController, cartView: CartViewModel)
+fun ItemCart(navController: NavController, cartView: CartViewModel, settingViewModel: SettingViewModel)
 {
+    val isDarkMode by settingViewModel.isDarkMode.collectAsState()
+    val backgroundColor = if (isDarkMode) {
+        colorResource(id = R.color.black)
+    } else {
+        colorResource(id = R.color.white)
+    }
+
+    val textColor = if (isDarkMode) {
+        colorResource(id = R.color.white)
+    } else {
+        colorResource(id = R.color.black)
+    }
     cartView.getCartItems()
 
     val cartItems: List<MenuStorageItem> by cartView.cartItems.collectAsState(emptyList())
-    LazyColumn {
+    LazyColumn(
+        modifier = Modifier
+            .background(backgroundColor)
+    ){
         items(cartItems) { food ->
             CartRow(navController = navController, food = food, deleteFn = {id: Int -> cartView.deleteNoteById(id) })
         }

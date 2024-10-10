@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -41,7 +42,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -56,14 +59,28 @@ import nz.ac.canterbury.seng303.lab2.models.MenuItem
 import nz.ac.canterbury.seng303.lab2.viewmodels.CartViewModel
 import nz.ac.canterbury.seng303.lab2.viewmodels.MenuUiState
 import nz.ac.canterbury.seng303.lab2.viewmodels.MenuViewModel
+import nz.ac.canterbury.seng303.lab2.viewmodels.SettingViewModel
 
 @Composable
 fun Home(
     navController: NavController,
     cartViewModel: CartViewModel,
-    menuViewModel: MenuViewModel = viewModel()
-
+    menuViewModel: MenuViewModel = viewModel(),
+    settingViewModel: SettingViewModel
 ) {
+    val isDarkMode by settingViewModel.isDarkMode.collectAsState()
+    val backgroundColor = if (isDarkMode) {
+        colorResource(id = R.color.black)
+    } else {
+        colorResource(id = R.color.white)
+    }
+
+    val textColor = if (isDarkMode) {
+        colorResource(id = R.color.white)
+    } else {
+        colorResource(id = R.color.black)
+    }
+
     val menuItems : List<MenuItem> = MenuItem.getMenuItems() /* Items for the scrollable grid for menu selection */
     val menuIcons : List<MenuIcon> = MenuIcon.getMenuIcons() /* Items for the scrollable row for filtering the menu */
     val menuUiState by menuViewModel.uiState.collectAsState() /* State of the menu. Changes on click of icon */
@@ -73,22 +90,26 @@ fun Home(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier
                 .fillMaxHeight(0.3f) /*Changes the height of lazy row*/
+                .background(backgroundColor)
         ) {
             menuIcons.forEach { foodIcon ->
                 item {
-                    MenuRowIcon(foodIcon, menuUiState, menuViewModel)
+                    MenuRowIcon(foodIcon, menuUiState, menuViewModel, textColor)
                 }
             }
         }
+
+        Spacer(Modifier.height(10.dp))
+        
         LazyVerticalGrid( /* This vertical grid is the up/down scrollable menu with cards for relevant menu items */
             columns = GridCells.Fixed(2),
             modifier = Modifier
-                .background(Color.Black)
+                .background(Color.White)
         ) {
             val filteredMenu = menuItems.filter { it.type.contains(menuUiState.currentSelectedIcon.text) } /* Filter the menu so that only items that are relavant are passed into the LazyVerticalGrid */
             filteredMenu.forEach { foodItem ->
                 item {
-                    MenuItemCard(foodItem, cartViewModel)
+                    MenuItemCard(foodItem, cartViewModel, textColor, backgroundColor)
                 }
             }
         }
@@ -97,7 +118,7 @@ fun Home(
 
 
 @Composable
-fun MenuRowIcon(item: MenuIcon, menuUiState: MenuUiState, menuViewModel: MenuViewModel) { /* TODO EDIT SO THAT ONLY ONE ICON CAN BE CLICKED AT A TIME */
+fun MenuRowIcon(item: MenuIcon, menuUiState: MenuUiState, menuViewModel: MenuViewModel, textColor: Color) { /* TODO EDIT SO THAT ONLY ONE ICON CAN BE CLICKED AT A TIME */
     var icon: Int = item.defaultIcon
 
     if (item.text == menuUiState.currentSelectedIcon.text) { /* loads the default screen */
@@ -134,13 +155,14 @@ fun MenuRowIcon(item: MenuIcon, menuUiState: MenuUiState, menuViewModel: MenuVie
                 text = item.text,
                 textAlign = TextAlign.Center,
                 maxLines = 2,
+                color = textColor,
             )
         }
     }
 }
 
 @Composable
-fun MenuItemCard(item: MenuItem, cartViewModel: CartViewModel) {
+fun MenuItemCard(item: MenuItem, cartViewModel: CartViewModel, textColor: Color, backgroundColor: Color) {
     var isClicked = remember { mutableStateOf(false) }
 
     if (isClicked.value) { /* Checks if menu item card is clicked. If it is it will display the Dialog with the item description */
@@ -161,7 +183,7 @@ fun MenuItemCard(item: MenuItem, cartViewModel: CartViewModel) {
                     isClicked.value = true
                 }) ,
             colors = CardDefaults.cardColors(
-                containerColor = Color.White
+                containerColor = backgroundColor
             ),
         ) {
             Box( /* Box for the image for each menu item */
@@ -180,19 +202,23 @@ fun MenuItemCard(item: MenuItem, cartViewModel: CartViewModel) {
             }
             Box( /* Box for the text + price for each menu item */
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+                    .width(140.dp)
 //                    .background(color = Color.Yellow)
             ) {
                 val decimalFormat = DecimalFormat("#.00")
                 val formattedPrice = decimalFormat.format(item.price)
-                Text(text = item.name + "\n$" + formattedPrice)
+                Text(
+                    text = item.name + "\n$" + formattedPrice,
+                    color = textColor
+                    )
             }
             ElevatedButton( /* Button to add item to cart */
                 onClick = {cartViewModel.addItem(item)},
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(4.dp)
-                    .fillMaxWidth(),
+                    .width(140.dp),
                 shape = RoundedCornerShape(corner = CornerSize(8.dp)), /* Changes how rounded the corners are for the Add button */
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorResource(id = R.color.burger_fuel_purple), /* Background color of the button */
