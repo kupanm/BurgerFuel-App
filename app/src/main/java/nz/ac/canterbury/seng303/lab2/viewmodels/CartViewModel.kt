@@ -38,8 +38,9 @@ class CartViewModel(
 
 
     fun addItem(item : MenuItem) = viewModelScope.launch {
-        cartStorage.insert(item).catch { Log.e("CART_VIEW_MODEL", "Could not insert cart item") }
-            .collect()
+        cartStorage.insert(item).catch {
+            Log.e("CART_VIEW_MODEL", "Could not insert cart item")
+        }.collect()
         cartStorage.getAll().catch { Log.e("CART_VIEW_MODEL", it.toString()) }
             .collect{_cartItems.emit(it)}
     }

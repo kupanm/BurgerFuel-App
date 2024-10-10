@@ -53,13 +53,16 @@ import androidx.navigation.NavController
 import nz.ac.canterbury.seng303.lab2.R
 import nz.ac.canterbury.seng303.lab2.models.MenuIcon
 import nz.ac.canterbury.seng303.lab2.models.MenuItem
+import nz.ac.canterbury.seng303.lab2.viewmodels.CartViewModel
 import nz.ac.canterbury.seng303.lab2.viewmodels.MenuUiState
 import nz.ac.canterbury.seng303.lab2.viewmodels.MenuViewModel
 
 @Composable
 fun Home(
     navController: NavController,
+    cartViewModel: CartViewModel,
     menuViewModel: MenuViewModel = viewModel()
+
 ) {
     val menuItems : List<MenuItem> = MenuItem.getMenuItems() /* Items for the scrollable grid for menu selection */
     val menuIcons : List<MenuIcon> = MenuIcon.getMenuIcons() /* Items for the scrollable row for filtering the menu */
@@ -85,7 +88,7 @@ fun Home(
             val filteredMenu = menuItems.filter { it.type.contains(menuUiState.currentSelectedIcon.text) } /* Filter the menu so that only items that are relavant are passed into the LazyVerticalGrid */
             filteredMenu.forEach { foodItem ->
                 item {
-                    MenuItemCard(foodItem)
+                    MenuItemCard(foodItem, cartViewModel)
                 }
             }
         }
@@ -137,11 +140,11 @@ fun MenuRowIcon(item: MenuIcon, menuUiState: MenuUiState, menuViewModel: MenuVie
 }
 
 @Composable
-fun MenuItemCard(item: MenuItem) {
+fun MenuItemCard(item: MenuItem, cartViewModel: CartViewModel) {
     var isClicked = remember { mutableStateOf(false) }
 
     if (isClicked.value) { /* Checks if menu item card is clicked. If it is it will display the Dialog with the item description */
-        displayItemDialog(item, isClicked)
+        displayItemDialog(item, isClicked, cartViewModel)
     }
 
     Column(modifier = Modifier
@@ -203,8 +206,8 @@ fun MenuItemCard(item: MenuItem) {
 }
 
 @Composable
-fun displayItemDialog(item: MenuItem, isClicked: MutableState<Boolean>) { /* Will display the item description */
-    var itemQuantity by remember { mutableStateOf(1) }
+fun displayItemDialog(item: MenuItem, isClicked: MutableState<Boolean>, cartViewModel: CartViewModel) { /* Will display the item description */
+    //var itemQuantity by remember { mutableStateOf(item.amount) }
     Dialog(onDismissRequest = { isClicked.value = false }) {
         Card(
             modifier = Modifier
@@ -288,7 +291,7 @@ fun displayItemDialog(item: MenuItem, isClicked: MutableState<Boolean>) { /* Wil
 
             ) {
                 IconButton(
-                    onClick = { if (itemQuantity > 1) itemQuantity-- },
+                    onClick = { item.dec() },
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.remove),
@@ -298,12 +301,12 @@ fun displayItemDialog(item: MenuItem, isClicked: MutableState<Boolean>) { /* Wil
                 }
 
                 Text(
-                    text = "$itemQuantity",
+                    text = "${item.amount.value}",
                     textAlign = TextAlign.Center
                 )
 
                 IconButton(
-                    onClick = { itemQuantity++ },
+                    onClick = { item.inc() },
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.add),
@@ -321,7 +324,9 @@ fun displayItemDialog(item: MenuItem, isClicked: MutableState<Boolean>) { /* Wil
                 contentAlignment = Alignment.Center
             ) {
                 ElevatedButton( /*Add to cart button*/
-                    onClick = {/*TODO THIS IS WHERE YOU ADD ITEM TO CART*/ },
+                    onClick = {/*TODO THIS IS WHERE YOU ADD ITEM TO CART*/
+                        cartViewModel.addItem(item)
+                    },
                     modifier = Modifier
                         .padding(4.dp)
                         .fillMaxWidth(),
@@ -331,7 +336,7 @@ fun displayItemDialog(item: MenuItem, isClicked: MutableState<Boolean>) { /* Wil
                         contentColor = Color.White /* Color of the text in the button */
                     )
                 ) {
-                    val total = item.price * itemQuantity
+                    val total = item.price * item.amount.value
                     val decimalFormat = DecimalFormat("#.00")
                     val formattedTotal = decimalFormat.format(total)
                     Text(text = "ADD - $${formattedTotal}")

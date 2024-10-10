@@ -76,6 +76,7 @@ import nz.ac.canterbury.seng303.lab2.screens.Locations
 import nz.ac.canterbury.seng303.lab2.screens.PastOrders
 import nz.ac.canterbury.seng303.lab2.screens.Profile
 import nz.ac.canterbury.seng303.lab2.ui.theme.Lab1Theme
+import nz.ac.canterbury.seng303.lab2.viewmodels.CartViewModel
 import nz.ac.canterbury.seng303.lab2.viewmodels.MenuViewModel
 import nz.ac.canterbury.seng303.lab2.viewmodels.NoteViewModel
 import kotlin.math.roundToInt
@@ -171,7 +172,7 @@ class MainActivity : ComponentActivity() {
 
                         NavHost(navController = navController, startDestination = "Home") {
                             composable("Home") {
-                                Home(navController = navController, cartView = cartViewModel)
+                                Home(navController = navController, cartViewModel = cartViewModel)
                             }
                             composable("Locations") {
                                 Locations(navController = navController)
