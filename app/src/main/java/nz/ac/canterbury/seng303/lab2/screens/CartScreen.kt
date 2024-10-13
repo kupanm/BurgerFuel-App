@@ -56,7 +56,7 @@ fun ItemCart(navController: NavController, cartView: CartViewModel, settingViewM
         modifier = Modifier
             .background(backgroundColor)
     ){
-        items(cartItems) { food ->
+        items(cartItems, key = {it.id}) { food ->
             CartRow(navController = navController, food = food, deleteFn = {id: Int -> cartView.deleteCartById(id) }, addFn = {id: Int -> cartView.addSingleCartItem(id)})
         }
     }
@@ -139,10 +139,6 @@ fun CartRow(navController: NavController, food: MenuStorageItem, deleteFn: (id: 
                     )
                 }
             }
-
-            
-            
-
         }
     }
 
