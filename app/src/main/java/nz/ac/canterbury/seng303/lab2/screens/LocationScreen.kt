@@ -13,6 +13,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,9 +44,6 @@ import nz.ac.canterbury.seng303.lab2.MainActivity
 @Composable
 fun Locations(navController: NavController)
 {
-    // permission dialog
-    val permissionDialog = remember { mutableStateOf(true) }
-
     // current context
     val context = LocalContext.current
     val locationClient = remember {
@@ -54,8 +52,7 @@ fun Locations(navController: NavController)
 
     var foundUserLocation by remember { mutableStateOf(false) }
 
-    var userLocation by remember {mutableStateOf(
-    LatLng(-43.5565101,172.7005736))}
+    var userLocation by remember {mutableStateOf(LatLng(-43.5565101,172.7005736))}
 
 
     val cameraPositionState = rememberCameraPositionState {
@@ -79,47 +76,39 @@ fun Locations(navController: NavController)
         // to handle the case where the user grants the permission. See the documentation
         // for ActivityCompat#requestPermissions for more details.
 
-        val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission()) {}
-        
+        val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission(),
+            onResult = {hasPermission ->
+                if (hasPermission) {
+                    locationClient.getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY, CancellationTokenSource().token)
+                        .addOnSuccessListener { location ->
+                            userLocation = LatLng(location.latitude, location.longitude)
 
-        // Launch ask for permission
-        if(permissionDialog.value) {
-            AlertDialog(
-                title = { Text(text = "Allow permission") },
-                text = { Text(text = "Allow the app to use your location and store your last location used in the app") },
-                onDismissRequest = { permissionDialog.value = false },
-                dismissButton = {
-                    Button(onClick = { permissionDialog.value = false }) {
-                        Text(text = "Deny")
-                    }
-                },
-                confirmButton = {
-                    Button(onClick = { launcher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
-                        permissionDialog.value = false
-                    }) {
-                        Text(text = "Confirm")
-                    }
-                },
-                properties = DialogProperties(dismissOnClickOutside = true)
-            )
+                            foundUserLocation = true
+                            cameraPositionState.position = CameraPosition(userLocation,13f,0f,0f)
+
+                            Log.d("LOCATION", "Found user location")
+                        }
+                }
+            })
+        
+        LaunchedEffect(Unit) {
+            launcher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
         }
 
-        // get last used store
-
-        Log.d("STORE_MAP", "Location permission not granted" )
+        Log.d("LOCATION", "Location permission not granted" )
     } else {
 
         locationClient.getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY, CancellationTokenSource().token)
             .addOnSuccessListener { location ->
-                userLocation to LatLng(location.latitude, location.longitude)
+                userLocation = LatLng(location.latitude, location.longitude)
 
-                foundUserLocation to true
+                foundUserLocation = true
                 cameraPositionState.position = CameraPosition(userLocation,13f,0f,0f)
 
-                Log.d("Location", "Found user location")
+                Log.d("LOCATION", "Found user location")
             }
             .addOnFailureListener { exception ->
-                Log.d("Location", "Location Exception: $exception")
+                Log.d("LOCATION", "Location Exception: $exception")
             }
     }
 
@@ -152,7 +141,9 @@ fun Locations(navController: NavController)
                 Marker(
                     rememberMarkerState(position = userLocation),
                     icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)
+
                 )
+                Log.d("LOCATION", "Placed user location marker at $userLocation")
             }
 
             storeList.forEach { place ->
