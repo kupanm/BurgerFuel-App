@@ -83,10 +83,12 @@ import nz.ac.canterbury.seng303.lab2.screens.Locations
 import nz.ac.canterbury.seng303.lab2.screens.PastOrders
 import nz.ac.canterbury.seng303.lab2.screens.Profile
 import nz.ac.canterbury.seng303.lab2.ui.theme.Lab1Theme
+import nz.ac.canterbury.seng303.lab2.util.NotificationHelper
 import nz.ac.canterbury.seng303.lab2.viewmodels.CartViewModel
 import nz.ac.canterbury.seng303.lab2.viewmodels.MenuViewModel
 import nz.ac.canterbury.seng303.lab2.viewmodels.NoteViewModel
 import nz.ac.canterbury.seng303.lab2.viewmodels.SettingViewModel
+import android.content.pm.PackageManager
 import kotlin.math.roundToInt
 import org.koin.androidx.viewmodel.ext.android.viewModel as koinViewModel
 
@@ -94,12 +96,14 @@ class MainActivity : ComponentActivity() {
 
     private val cartViewModel: CartViewModel by koinViewModel()
     val settingViewModel: SettingViewModel = SettingViewModel()
-
+    private lateinit var notificationHelper: NotificationHelper
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        notificationHelper = NotificationHelper(this)
+        notificationHelper.checkAndRequestNotificationPermission(this)
 
         // Load cart maybe? dont know wat actually loads it tbh
         cartViewModel.getCartItems()
@@ -221,13 +225,23 @@ class MainActivity : ComponentActivity() {
 
                         NavHost(navController = navController, startDestination = "Home") {
                             composable("Home") {
-                                Home(navController = navController, cartViewModel = cartViewModel, settingViewModel = settingViewModel)
+                                Home(
+                                    navController = navController,
+                                    cartViewModel = cartViewModel,
+                                    settingViewModel = settingViewModel,
+                                    notificationHelper = notificationHelper
+                                )
                             }
                             composable("Locations") {
                                 Locations(navController = navController)
                             }
                             composable("ItemCart") {
-                                ItemCart(navController = navController, cartView = cartViewModel, settingViewModel = settingViewModel)
+                                ItemCart(
+                                    navController = navController,
+                                    cartView = cartViewModel,
+                                    settingViewModel = settingViewModel,
+                                    notificationHelper = notificationHelper
+                                )
                             }
                             composable("Profile") {
                                 Profile(navController = navController, settingViewModel = settingViewModel)
@@ -247,6 +261,23 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == 1) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                // Permission granted, now you can show the notification
+                notificationHelper.createNotification(notificationTitle = "Access Permitted", notificationDesc = "First Notifcation!")
+            } else {
+                // Permission denied, handle accordingly (e.g., show a message)
             }
         }
     }

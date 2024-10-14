@@ -1,5 +1,10 @@
 package nz.ac.canterbury.seng303.lab2.screens
 
+<<<<<<< app/src/main/java/nz/ac/canterbury/seng303/lab2/screens/CartScreen.kt
+=======
+import android.graphics.Paint.Align
+import android.icu.text.DecimalFormat
+>>>>>>> app/src/main/java/nz/ac/canterbury/seng303/lab2/screens/CartScreen.kt
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,12 +35,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import nz.ac.canterbury.seng303.lab2.R
 import nz.ac.canterbury.seng303.lab2.models.MenuStorageItem
+import nz.ac.canterbury.seng303.lab2.util.NotificationHelper
 import nz.ac.canterbury.seng303.lab2.viewmodels.CartViewModel
 import nz.ac.canterbury.seng303.lab2.viewmodels.SettingViewModel
 
 
 @Composable
-fun ItemCart(navController: NavController, cartView: CartViewModel, settingViewModel: SettingViewModel)
+fun ItemCart(
+    navController: NavController,
+    cartView: CartViewModel,
+    settingViewModel: SettingViewModel,
+    notificationHelper: NotificationHelper
+)
 {
     val isDarkMode by settingViewModel.isDarkMode.collectAsState()
     val backgroundColor = if (isDarkMode) {
@@ -57,14 +68,22 @@ fun ItemCart(navController: NavController, cartView: CartViewModel, settingViewM
             .background(backgroundColor)
     ){
         items(cartItems, key = {it.id}) { food ->
-            CartRow(navController = navController, food = food, deleteFn = {id: Int -> cartView.deleteCartById(id) }, addFn = {id: Int -> cartView.addSingleCartItem(id)})
+            CartRow(navController = navController, 
+            food = food, deleteFn = {id: Int -> cartView.deleteCartById(id) }, 
+            addFn = {id: Int -> cartView.addSingleCartItem(id)},
+            notificationHelper = notificationHelper)
         }
     }
 }
 
 
 @Composable
-fun CartRow(navController: NavController, food: MenuStorageItem, deleteFn: (id: Int) -> Unit, addFn: (id: Int) -> Unit)
+
+fun CartRow(navController: NavController, 
+    food: MenuStorageItem, 
+    deleteFn: (id: Int) -> Unit, 
+    addFn: (id: Int) -> Unit,
+    notificationHelper: NotificationHelper)
 {
     var itemQuantity by remember { mutableStateOf(food.amount) }
 
@@ -110,6 +129,10 @@ fun CartRow(navController: NavController, food: MenuStorageItem, deleteFn: (id: 
                         deleteFn(food.id)
                         food.amount--
                         itemQuantity--
+                    }
+                    val decimalFormat = DecimalFormat("#.00")
+                    val formattedPrice = decimalFormat.format(food.price)
+                    notificationHelper.createNotification(notificationTitle = "Item Removed From Cart", notificationDesc = "1x " + food.name + " $"+formattedPrice)
 
                 }) {
                     Icon(
@@ -132,6 +155,9 @@ fun CartRow(navController: NavController, food: MenuStorageItem, deleteFn: (id: 
                     addFn(food.id)
                     food.amount++
                     itemQuantity++
+                    val decimalFormat = DecimalFormat("#.00")
+                    val formattedPrice = decimalFormat.format(food.price)
+                    notificationHelper.createNotification(notificationTitle = "Item Added To Cart", notificationDesc = "1x " + food.name + " $"+formattedPrice)
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.add),
