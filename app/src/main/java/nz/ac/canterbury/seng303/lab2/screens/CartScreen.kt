@@ -1,10 +1,8 @@
 package nz.ac.canterbury.seng303.lab2.screens
 
-<<<<<<< app/src/main/java/nz/ac/canterbury/seng303/lab2/screens/CartScreen.kt
-=======
+
 import android.graphics.Paint.Align
 import android.icu.text.DecimalFormat
->>>>>>> app/src/main/java/nz/ac/canterbury/seng303/lab2/screens/CartScreen.kt
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -129,10 +127,10 @@ fun CartRow(navController: NavController,
                         deleteFn(food.id)
                         food.amount--
                         itemQuantity--
-                    }
-                    val decimalFormat = DecimalFormat("#.00")
-                    val formattedPrice = decimalFormat.format(food.price)
-                    notificationHelper.createNotification(notificationTitle = "Item Removed From Cart", notificationDesc = "1x " + food.name + " $"+formattedPrice)
+
+                        val decimalFormat = DecimalFormat("#.00")
+                        val formattedPrice = decimalFormat.format(food.price)
+                        notificationHelper.createNotification(notificationTitle = "Item Removed From Cart", notificationDesc = "1x " + food.name + " $"+formattedPrice)
 
                 }) {
                     Icon(
