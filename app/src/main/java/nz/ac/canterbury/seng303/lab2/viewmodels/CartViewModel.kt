@@ -3,11 +3,13 @@ package nz.ac.canterbury.seng303.lab2.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.launch
 import nz.ac.canterbury.seng303.lab2.datastore.Storage
 import nz.ac.canterbury.seng303.lab2.models.MenuItem
@@ -91,6 +93,17 @@ class CartViewModel(
         } else {
             Log.e("CART_VIEW_MODEL", "Item not in cart")
         }
+    }
+
+
+    fun clearCart() = viewModelScope.launch {
+        Log.d("CART_VIEW_MODEL", "Clearing cart")
+
+        _cartItems.value.forEach() { item ->
+            cartStorage.delete(item.id).collect()
+        }
+
+
     }
 
 

@@ -114,8 +114,12 @@ fun Locations(navController: NavController, settingViewModel: SettingViewModel)
             .addOnSuccessListener { location ->
                 userLocation = LatLng(location.latitude, location.longitude)
 
+
+                if(!foundUserLocation) {
+                    cameraPositionState.position = CameraPosition(userLocation, 13f, 0f, 0f)
+                }
+
                 foundUserLocation = true
-                cameraPositionState.position = CameraPosition(userLocation,13f,0f,0f)
 
                 Log.d("LOCATION", "Found user location")
             }

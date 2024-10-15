@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -100,6 +101,7 @@ fun ItemCart(
                 ) {
                     ElevatedButton( /* Button to add items to order */
                         onClick = {
+                            cartView.clearCart()
                         },
                         modifier = Modifier
                             .padding(4.dp)
@@ -167,10 +169,14 @@ fun CartRow(navController: NavController,
                 )
             }
 
-            Text(
-                text = food.name,
-                textAlign = TextAlign.Center
-            )
+            Column(Modifier.fillMaxHeight()) {
+                Text(
+                    text = food.name,
+                    textAlign = TextAlign.Center
+                )
+
+                Text(text = "Cost: $${String.format("%.2f",itemQuantity * food.price)}")
+            }
 
         }
 
@@ -197,6 +203,9 @@ fun CartRow(navController: NavController,
                         painter = painterResource(id = R.drawable.remove),
                         contentDescription = "Remove Item"
                     )
+
+
+
                 }
             }
 
