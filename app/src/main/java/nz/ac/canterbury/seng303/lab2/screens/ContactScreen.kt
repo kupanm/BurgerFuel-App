@@ -157,7 +157,7 @@ fun ContactScreen(
             )
 //                .background(gradientBrush)
         ) {
-            Text("Submit", fontSize = 16.sp)
+            Text("SUBMIT", fontSize = 16.sp)
         }
 
 //        Text(

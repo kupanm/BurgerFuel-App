@@ -88,8 +88,8 @@ fun ItemCart(
             items(cartItems, key = {it.id}) { food ->
                 CartRow(navController = navController,
                     food = food, deleteFn = {id: Int -> cartView.deleteCartById(id) },
-                    addFn = {id: Int -> cartView.addSingleCartItem(id)},
-                    notificationHelper = notificationHelper)
+                    addFn = {id: Int -> cartView.addSingleCartItem(id)}
+                )
             }
 
             item {
@@ -117,6 +117,7 @@ fun ItemCart(
 
                     ElevatedButton( /* Button to add items to order */
                         onClick = {
+                            notificationHelper.createNotification(notificationTitle = "Order Successful", notificationDesc = "BurgerFuel is now processing your order.")
                         },
                         modifier = Modifier
                             .padding(4.dp)
@@ -142,8 +143,8 @@ fun ItemCart(
 fun CartRow(navController: NavController, 
     food: MenuStorageItem, 
     deleteFn: (id: Int) -> Unit, 
-    addFn: (id: Int) -> Unit,
-    notificationHelper: NotificationHelper)
+    addFn: (id: Int) -> Unit
+)
 {
     var itemQuantity by remember { mutableStateOf(food.amount) }
 
@@ -196,8 +197,6 @@ fun CartRow(navController: NavController,
 
                         val decimalFormat = DecimalFormat("#.00")
                         val formattedPrice = decimalFormat.format(food.price)
-                        notificationHelper.createNotification(notificationTitle = "Item Removed From Cart", notificationDesc = "1x " + food.name + " $"+formattedPrice)
-
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.remove),
@@ -224,7 +223,6 @@ fun CartRow(navController: NavController,
                     itemQuantity++
                     val decimalFormat = DecimalFormat("#.00")
                     val formattedPrice = decimalFormat.format(food.price)
-                    notificationHelper.createNotification(notificationTitle = "Item Added To Cart", notificationDesc = "1x " + food.name + " $"+formattedPrice)
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.add),

@@ -74,31 +74,19 @@ fun Profile(navController: NavController, settingViewModel: SettingViewModel)
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        val gradientBrush = Brush.linearGradient(
-            colors = listOf(
-                Color(0xFF4A2F7f), // Purple Shade
-                Color(0xFF0ABEF0) // Blue Shade
-            ),
-            start = Offset(0f, 1000f),
-            end = Offset(1000f, 0f)
-        )
-
-        Spacer(modifier = Modifier.height(10.dp).fillMaxWidth())
+        Spacer(modifier = Modifier
+            .height(10.dp)
+            .fillMaxWidth())
         Column(
             modifier = Modifier
                 .wrapContentSize()
                 .border(
                     width = 8.dp,
-                    brush = gradientBrush,
+                    color = colorResource(id = R.color.burger_fuel_purple),
                     shape = RoundedCornerShape(24.dp)
                 )
-                .shadow(
-                    elevation = 8.dp,
-                    shape = RoundedCornerShape(8.dp),
-                    clip = false
-                )
                 .clip(RoundedCornerShape(24.dp))
-                .background(gradientBrush),
+                .background(colorResource(id = R.color.burger_fuel_purple)),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
@@ -110,7 +98,9 @@ fun Profile(navController: NavController, settingViewModel: SettingViewModel)
                     .background(Color.White),
                 contentScale = ContentScale.Fit
             )
-            Spacer(modifier = Modifier.height(10.dp).width(1.dp))
+            Spacer(modifier = Modifier
+                .height(10.dp)
+                .width(1.dp))
             Image(
                 painter = painterResource(id = R.drawable.kids),
                 contentDescription = "Profile Picture",
@@ -129,15 +119,18 @@ fun Profile(navController: NavController, settingViewModel: SettingViewModel)
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
             )
-            Spacer(modifier = Modifier.height(10.dp).width(1.dp))
+            Spacer(modifier = Modifier
+                .height(10.dp)
+                .width(1.dp))
         }
 
-        Spacer(modifier = Modifier.height(40.dp).fillMaxWidth())
+        Spacer(modifier = Modifier
+            .height(40.dp)
+            .fillMaxWidth())
 
         val iconSize: Int = 75
         val borderWidth: Float = 2F
         val textSize = MaterialTheme.typography.bodyLarge
-        val backgroundColor = gradientBrush
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
@@ -159,13 +152,8 @@ fun Profile(navController: NavController, settingViewModel: SettingViewModel)
                         contentDescription = "Settings",
                         tint = Color.White,
                         modifier = Modifier
-                            .shadow(
-                                elevation = 8.dp,
-                                shape = RoundedCornerShape(8.dp),
-                                clip = false
-                            )
                             .clip(RoundedCornerShape(24.dp))
-                            .background(backgroundColor)
+                            .background(colorResource(id = R.color.burger_fuel_purple))
                             .padding(8.dp)
                             .size(iconSize.dp)
                     )
@@ -194,13 +182,8 @@ fun Profile(navController: NavController, settingViewModel: SettingViewModel)
                         contentDescription = "Contact",
                         tint = Color.White,
                         modifier = Modifier
-                            .shadow(
-                                elevation = 8.dp,
-                                shape = RoundedCornerShape(8.dp),
-                                clip = false
-                            )
                             .clip(RoundedCornerShape(24.dp))
-                            .background(backgroundColor)
+                            .background(colorResource(id = R.color.burger_fuel_purple))
                             .padding(8.dp)
                             .size(iconSize.dp)
                     )
@@ -229,13 +212,8 @@ fun Profile(navController: NavController, settingViewModel: SettingViewModel)
                         contentDescription = "Allergy",
                         tint = Color.White,
                         modifier = Modifier
-                            .shadow(
-                                elevation = 8.dp,
-                                shape = RoundedCornerShape(8.dp),
-                                clip = false
-                            )
                             .clip(RoundedCornerShape(24.dp))
-                            .background(backgroundColor)
+                            .background(colorResource(id = R.color.burger_fuel_purple))
                             .padding(8.dp)
                             .size(iconSize.dp)
                     )
