@@ -11,7 +11,7 @@ class Store(val id: Int,
         fun getStores(): List<Store> {
             return listOf (
                 Store (1,
-                    "Riccarton",
+                    "Bush Inn Riccarton",
                     LatLng(-43.5307882, 172.5752179)),
                 Store(2,
                     "Sydenham",

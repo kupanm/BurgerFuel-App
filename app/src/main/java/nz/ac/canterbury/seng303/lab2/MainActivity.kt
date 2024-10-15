@@ -128,22 +128,27 @@ class MainActivity : ComponentActivity() {
                         // Add your AppBar content here
                         TopAppBar(
                             colors = TopAppBarDefaults.topAppBarColors(containerColor = backgroundColor),
-                            title = { Row(verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center,
-                                modifier = Modifier.scale(0.5f)) {
+                            title = {Box(//verticalAlignment = Alignment.CenterVertically,
+                                //horizontalArrangement = Arrangement.Center,
+                                modifier = Modifier.scale(0.5f).fillMaxWidth()) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.borgor_logo),
                                     contentDescription = "BurgerFuel Logo",
-                                    tint = Color.Unspecified
+                                    tint = Color.Unspecified,
+                                    modifier = Modifier.align(Alignment.Center)
                                 )
                             } },
                             navigationIcon = {
-                                IconButton(onClick = { navController.navigate("Locations") }) {
-                                    Icon(
-                                        imageVector = Icons.Default.LocationOn,
-                                        contentDescription = "Location",
-                                        tint = textColor
-                                    )
+                                Row() {
+                                    IconButton(onClick = { navController.navigate("Locations") }) {
+                                        Icon(
+                                            imageVector = Icons.Default.LocationOn,
+                                            contentDescription = "Location",
+                                            tint = textColor
+                                        )
+
+                                    }
+
                                 }
                             },
                             actions = {
@@ -178,6 +183,9 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     },
+
+
+
                     bottomBar = {
                         BottomAppBar( /*This is the bottom navigation bar for the app*/
                             containerColor = backgroundColor,
@@ -233,7 +241,7 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             composable("Locations") {
-                                Locations(navController = navController)
+                                Locations(navController = navController, settingViewModel = settingViewModel)
                             }
                             composable("ItemCart") {
                                 ItemCart(
