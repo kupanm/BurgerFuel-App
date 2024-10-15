@@ -34,6 +34,7 @@ import nz.ac.canterbury.seng303.lab2.R
 fun AllergyScreen(
     navController: NavController
 ){
+
     val gradientBrush = Brush.linearGradient(
         colors = listOf(
             colorResource(id = R.color.burger_fuel_purple), // Purple Shade
@@ -56,7 +57,7 @@ fun AllergyScreen(
     ){
         // Title
         Text(
-            text = "LIFESTYLE & ALLERGEN INFO",
+            text = context.getString(R.string.allergen_info_title),
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
             color = colorResource(id = R.color.white),
@@ -67,7 +68,7 @@ fun AllergyScreen(
 
         // Subtitle
         Text(
-            text = "EATING WITH ALLERGIES",
+            text = context.getString(R.string.eating_w_allergies),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = colorResource(id = R.color.white),
@@ -78,7 +79,7 @@ fun AllergyScreen(
 
         // Body Text
         Text(
-            text = "For your safety, please make informed decisions when eating with allergies by referring to our Allergen Information Chart before you eat with us. Our menu contains several known allergens, and we cannot 100% guarantee against cross contamination. Click on the Allergen Information link below to learn more and we also highly recommend you inform staff if you have any allergies or specific dietary needs prior to ordering.",
+            text = context.getString(R.string.eating_w_allergies_info),
             fontSize = 16.sp,
             color = colorResource(id = R.color.white),
             modifier = Modifier.fillMaxWidth(),
@@ -113,7 +114,7 @@ fun AllergyScreen(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "ALLERGEN INFORMATION",
+                text = context.getString(R.string.allergen_info_title),
                 fontSize = 24.sp,
                 color = colorResource(id = R.color.white)
             )
@@ -121,7 +122,7 @@ fun AllergyScreen(
 
         // Subtitle
         Text(
-            text = "GLUTEN FREE",
+            text = context.getString(R.string.gluten_free_title),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = colorResource(id = R.color.white),
@@ -132,7 +133,7 @@ fun AllergyScreen(
 
         // Body Text
         Text(
-            text = "BurgerFuel offers a gluten free bun that is wheat free, soy free and dairy free. Some of our burgers can be made gluten free – just chat with our staff. Click on the Allergen Information link above to learn about what products contain gluten.",
+            text = context.getString(R.string.gluten_free_info),
             fontSize = 16.sp,
             color = colorResource(id = R.color.white),
             modifier = Modifier.fillMaxWidth(),
@@ -142,7 +143,7 @@ fun AllergyScreen(
 
         // Subtitle
         Text(
-            text = "VEGAN & VEGETARIAN",
+            text = context.getString(R.string.vegan_vegetarian_title),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = colorResource(id = R.color.white),
@@ -153,7 +154,7 @@ fun AllergyScreen(
 
         // Body Text
         Text(
-            text = "Our vegetarian and vegan patties are specially cooked on a separate surface, and we reckon our Plant-Powered offerings are so good they’ll make even your most carnivorous mates jealous. Click on the Allergen Information link above to learn about what products are vegan and vegetarian suitable.",
+            text = context.getString(R.string.vegan_vegetarian_info),
             fontSize = 16.sp,
             color = colorResource(id = R.color.white),
             modifier = Modifier.fillMaxWidth(),
@@ -163,7 +164,7 @@ fun AllergyScreen(
 
         // Subtitle
         Text(
-            text = "HALAL",
+            text = context.getString(R.string.halal_title),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = colorResource(id = R.color.white),
@@ -174,7 +175,7 @@ fun AllergyScreen(
 
         // Body Text
         Text(
-            text = "Please let our crew know if you are Halal and we’re happy to cook your favourite burger separately using fresh, clean utensils. Please be aware that our stores and food are not halal in the strictest sense as some products on our menu are not Halal certified and we cannot 100% guarantee against cross contamination with non-Halal products. Click on the Allergen Information link above to find out what products are Halal suitable.",
+            text = context.getString(R.string.halal_info),
             fontSize = 16.sp,
             color = colorResource(id = R.color.white),
             modifier = Modifier.fillMaxWidth(),
@@ -184,7 +185,7 @@ fun AllergyScreen(
 
         // Subtitle
         Text(
-            text = "LOW CARB",
+            text = context.getString(R.string.low_carb_title),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = colorResource(id = R.color.white),
@@ -195,7 +196,7 @@ fun AllergyScreen(
 
         // Body Text
         Text(
-            text = "Living life in the low-carb zone? Order any gourmet burger as a Low-Carborator to ditch the buns for a double hit of fresh iceberg lettuce and salad ingredients. Turn your burger experience into a fresh turbo-salad-charged taste explosion.",
+            text = context.getString(R.string.low_carb_info),
             fontSize = 16.sp,
             color = colorResource(id = R.color.white),
             modifier = Modifier.fillMaxWidth(),

@@ -43,6 +43,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.modifier.modifierLocalMapOf
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
@@ -52,7 +53,7 @@ import nz.ac.canterbury.seng303.lab2.viewmodels.SettingViewModel
 @Composable
 fun Profile(navController: NavController, settingViewModel: SettingViewModel)
 {
-
+    val context = LocalContext.current
     val isDarkMode by settingViewModel.isDarkMode.collectAsState()
     val backgroundColorMain = if (isDarkMode) {
         colorResource(id = R.color.black)
@@ -123,7 +124,7 @@ fun Profile(navController: NavController, settingViewModel: SettingViewModel)
                     )
             )
             Text(
-                "Full name",
+                context.getString(R.string.default_profile_name),
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
@@ -170,7 +171,7 @@ fun Profile(navController: NavController, settingViewModel: SettingViewModel)
                     )
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        "Settings",
+                        context.getString(R.string.settings),
                         color = textColor,
                         style = textSize
                     )
@@ -205,7 +206,7 @@ fun Profile(navController: NavController, settingViewModel: SettingViewModel)
                     )
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        text = "Contact",
+                        text = context.getString(R.string.contact),
                         color = textColor,
                         style = textSize
                     )
@@ -240,7 +241,7 @@ fun Profile(navController: NavController, settingViewModel: SettingViewModel)
                     )
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        "Allergy",
+                        context.getString(R.string.allergy),
                         color = textColor,
                         style = textSize
                     )

@@ -6,7 +6,9 @@ import android.icu.text.DecimalFormat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -46,6 +49,7 @@ fun ItemCart(
     notificationHelper: NotificationHelper
 )
 {
+    val context = LocalContext.current
     val isDarkMode by settingViewModel.isDarkMode.collectAsState()
     val backgroundColor = if (isDarkMode) {
         colorResource(id = R.color.black)
@@ -61,15 +65,26 @@ fun ItemCart(
     cartView.getCartItems()
 
     val cartItems: List<MenuStorageItem> by cartView.cartItems.collectAsState(emptyList())
-    LazyColumn(
-        modifier = Modifier
-            .background(backgroundColor)
-    ){
-        items(cartItems, key = {it.id}) { food ->
-            CartRow(navController = navController, 
-            food = food, deleteFn = {id: Int -> cartView.deleteCartById(id) }, 
-            addFn = {id: Int -> cartView.addSingleCartItem(id)},
-            notificationHelper = notificationHelper)
+
+    if (cartItems.isEmpty()) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(context.getString(R.string.default_cart_string))
+        }
+    } else {
+        LazyColumn(
+            modifier = Modifier
+                .background(backgroundColor)
+        ){
+            items(cartItems, key = {it.id}) { food ->
+                CartRow(navController = navController,
+                    food = food, deleteFn = {id: Int -> cartView.deleteCartById(id) },
+                    addFn = {id: Int -> cartView.addSingleCartItem(id)},
+                    notificationHelper = notificationHelper)
+            }
         }
     }
 }

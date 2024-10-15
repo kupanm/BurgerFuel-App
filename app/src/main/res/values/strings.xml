@@ -1,3 +1,186 @@
 <resources>
     <string name="app_name">BurgerFuel</string>
+
+    <string name="ranch_feed_name">Ranch Feed</string>
+    <string name="ranch_feed_description">"Ranch Wrangler burger, Spud Fries w Aioli and Classic Coke* (*or any Classic Soda from the Coca Cola 330ml glass bottle range."</string>
+
+    <string name="rebel_feed_name">Rebel Feed</string>
+    <string name="rebel_feed_description">The Iron Rebel, Spud Fries with Aioli and a Coke range product</string>
+
+    <string name="ranch_wrangler_name">Ranch Wrangler</string>
+    <string name="ranch_wrangler_description">"Plan*t crispy Chick*n* patty, bread and butter pickles, vegan Ranch sauce, vegan Buffalo sauce, Tajin and Lime seasoning, mini wholemeal bun."</string>
+
+    <string name="iron_rebel_name">Iron Rebel</string>
+    <string name="iron_rebel_description">100% pure grass-fed NZ beef, smokey, slow cooked pulled beef, marinated in sticky BBQ sauce, melted cheddar, crispy lettuce, tomato, onion, free-range Aioli and a wholemeal bun. </string>
+
+    <string name="chev_brulee_name">Chev Brulee</string>
+    <string name="chev_brulee_description">All natural BurgerFuel Whip blended with creamy custard and swirls of Crème Brûlée Syrup. *This shake contains custard, it cannot be made dairy-free.</string>
+
+    <string name="off_roader_fries_name">Off-Roader Fries</string>
+    <string name="off_roader_fries_description">Seared bacon bits, BBQ sauce, cheese sauce, BurgerFuel Aioli, crispy onions and Spud Fries</string>
+
+    <string name="muscle_single_name">American Single</string>
+    <string name="muscle_single_description">NZ beef, cheddar, bread and butter pickles, BurgerFuel mustard, relish and BurgerFuel Aioli.</string>
+
+    <string name="muscle_double_name">American Double</string>
+    <string name="muscle_double_description">Double NZ beef, double cheddar, bread and butter pickles, BurgerFuel mustard, relish and BurgerFuel Aioli.</string>
+
+    <string name="c_n_cheese_name">C N Cheese</string>
+    <string name="c_n_cheese_description">NZ beef, cheddar, truffle mascarpone, parmesan, salad, relish and BurgerFuel Aioli.</string>
+
+    <string name="bio_fuel_name">Bio Fuel</string>
+    <string name="bio_fuel_description">NZ beef, egg, grated beetroot w/chia, salad, relish and BurgerFuel Aioli.</string>
+
+    <string name="bastard_name">Bastard</string>
+    <string name="bastard_description">NZ beef, cheddar, bacon, grated beetroot w/chia, pineapple, avocado, salad, relish and BurgerFuel Aioli.</string>
+
+    <string name="ford_freakout_name">Ford Freakout</string>
+    <string name="ford_freakout_description">NZ beef, bacon, avocado, salad, relish and BurgerFuel Aioli.</string>
+
+    <string name="bbq_roadster_name">BBQ Roadster</string>
+    <string name="bbq_roadster_description">NZ beef, cheddar, bacon, battered onion rings, BBQ sauce, salad, relish and BurgerFuel Aioli.</string>
+
+    <string name="hamburgini_name">Hamburgini</string>
+    <string name="hamburgini_description">NZ beef, cheddar, pickles, relish and BurgerFuel Aioli on a mini wholemeal bun.</string>
+
+    <string name="bacon_backfire_name">Bacon Backfire</string>
+    <string name="bacon_backfire_description">Grilled chicken, bacon, brie, salad, relish and BurgerFuel Aioli.</string>
+
+    <string name="burnout_name">Burnout</string>
+    <string name="burnout_description">Grilled chicken, bacon, avocado, blue cheese sauce, BurgerFuel mustard, salad, relish and BurgerFuel Aioli.</string>
+
+    <string name="thunderbird_name">Thunderbird</string>
+    <string name="thunderbird_description">Crispy buttermilk free-range fried chicken with a jalapeño and corn crumb, sliced jalapeño, salad, relish and BurgerFuel Chipotle Aioli.</string>
+
+    <string name="chook_royale_name">Chook Royale</string>
+    <string name="chook_royale_description">Grilled chicken tenderloins, seasoned with sea salt, garlic and rosemary, pineapple, salad, relish and BurgerFuel Aioli on a mini wholemeal bun.</string>
+
+    <string name="v8_vegan_name">V8 Vegan</string>
+    <string name="v8_vegan_description">Crumbed pumpkin, carrot, chickpea and ginger bites, vegan cheddar, avocado, grated beetroot w/chia, salad, relish and BurgerFuel Vegan Aioli.</string>
+
+    <string name="v_twin_vege_name">V-Twin Vege</string>
+    <string name="v_twin_vege_description">Mushroom, kumara, chickpea and basil patty, vegetarian cheddar, truffle mascarpone, plum sauce, salad, relish and BurgerFuel Aioli *Remove mascarpone, switch to BurgerFuel Vegan Aioli and vegan cheddar to make it vegan.</string>
+
+    <string name="spud_fries_aioli_name">Spud Fries</string>
+    <string name="spud_fries_aioli_description">Thick cut potato served with BurgerFuel Aioli.</string>
+
+    <string name="kumara_fries_aioli_name">Kumara Fries</string>
+    <string name="kumara_fries_aioli_description">Thick cut golden kūmara served with BurgerFuel Aioli.</string>
+
+    <string name="smash_browns_aioli_name">Smash Browns</string>
+    <string name="smash_browns_aioli_description">Golden, crispy hash bites served with BurgerFuel Aioli.</string>
+
+    <string name="choppers_name">Choppers</string>
+    <string name="choppers_description">Crispy southern fried chicken pieces drizzled with Sriracha and BurgerFuel Aioli.</string>
+
+    <string name="chicken_fenders_name">Chicken Fenders</string>
+    <string name="chicken_fenders_description">4 or 6 grilled free range skinless chicken tenderloins, seasoned with sea salt, garlic and rosemary, served with BurgerFuel Lemon Aioli or Chipotle Aioli.</string>
+
+    <string name="motobites_name">Motobites</string>
+    <string name="motobites_description">Crumbed pumpkin, carrot, chickpea and ginger bites, served with BurgerFuel Lemon Aioli or Chipotle Aioli.</string>
+
+    <string name="thickshake_name">Thickshake</string>
+    <string name="thickshake_description">Milk thickshakes made with all-natural BurgerFuel Whip.</string>
+
+    <string name="soy_thickshake_name">Soy Thickshake</string>
+    <string name="soy_thickshake_description">Soy thickshakes made with soy ice cream.</string>
+
+    <string name="rescued_cherry_cola_name">Cherry Cola</string>
+    <string name="rescued_cherry_cola_description">A BurgerFuel and Citizen collab. Combines the dark, rich flavour of rescued Central Otago Cherries and rum wash (The by-product botanicals from making rum).</string>
+
+    <string name="rescued_cherry_lemonade_name">Cherry Lemonade</string>
+    <string name="rescued_cherry_lemonade_description">A BurgerFuel and Citizen collab brings you a refreshing cherry pink lemonade. Every can saves 12 NZ cherries from going to waste.</string>
+
+    <string name="rescued_orangeade_name">Cherry Orangeade</string>
+    <string name="rescued_orangeade_description">A BurgerFuel and Citizen collab brings you a refreshing orange lemonade. Every can saves 2 NZ oranges from going to waste.</string>
+
+    <string name="coke_330ml_name">Coke 330ml</string>
+    <string name="coke_330ml_description">Coca-Cola 330ml.</string>
+
+    <string name="coke_zero_sugar_330ml_name">CokeZero Sugar 330ml</string>
+    <string name="coke_zero_sugar_330ml_description">Coca-Cola Zero Sugar 330ml.</string>
+
+    <string name="diet_coke_330ml_name">Diet Coke 330ml</string>
+    <string name="diet_coke_330ml_description">Diet Coca-Cola 330ml.</string>
+
+    <string name="sprite_330ml_name">Sprite 330ml</string>
+    <string name="sprite_330ml_description">Sprite 330ml.</string>
+
+    <string name="l_n_p_330ml_name">L&amp;P 330ml</string>
+    <string name="l_n_p_330ml_description">L&amp;P 330ml.</string>
+
+    <string name="fanta_330ml_name">Fanta 330ml</string>
+    <string name="fanta_330ml_description">Fanta 330ml.</string>
+
+    <string name="organic_apple_orange_mango_name">Apple&amp;Mango</string>
+    <string name="organic_apple_orange_mango_description">Organic Apple Orange &amp; Mango.</string>
+
+    <string name="organic_apple_feijoa_name">Apple &amp; Feijoa</string>
+    <string name="organic_apple_feijoa_description">Organic Apple and Feijoa Juice.</string>
+
+    <string name="organic_apple_blackcurrant_name">Apple&amp;Currant</string>
+    <string name="organic_apple_blackcurrant_description">mOst Organic Apple and Blackcurrant juice.</string>
+
+    <string name="kiwi_blue_600ml_name">Kiwi Blue 600ml</string>
+    <string name="kiwi_blue_600ml_description">Kiwi Blue 600ml.</string>
+
+    <string name="keri_kids_apple_name">Kids Apple 250ml</string>
+    <string name="keri_kids_apple_description">Keri Kids Apple Juice.</string>
+
+    <string name="keri_kids_apple_blackcurrant_name">Apple&amp;Currant</string>
+    <string name="keri_kids_apple_blackcurrant_description">Keri Kids Apple and Blackcurrant.</string>
+
+    <string name="kids_ink_cheeseburger_meal_name">Kid Cheeseburger</string>
+    <string name="kids_ink_cheeseburger_meal_description">Kids Cheeseburger, spud fries with free range BurgerFuel Aioli or tomato sauce, and a small juice.</string>
+
+    <string name="kids_ink_mini_motobites_meal_name">Motobites Meal</string>
+    <string name="kids_ink_mini_motobites_meal_description">Small Motobites, spud fries with free range BurgerFuel Aioli or tomato sauce, and a small juice.</string>
+
+    <string name="kids_ink_teeny_choppers_meal_name">Choppers Meal</string>
+    <string name="kids_ink_teeny_choppers_meal_description">Small Choppers, spud fries with free range BurgerFuel Aioli or tomato sauce, and a small juice.</string>
+
+    <string name="burgerfuel_aioli_name">Aioli</string>
+    <string name="burgerfuel_aioli_description">Free Range BurgerFuel Aioli.</string>
+
+    <string name="burgerfuel_lemon_aioli_name">Lemon Aioli</string>
+    <string name="burgerfuel_lemon_aioli_description">Free Range BurgerFuel Lemon Aioli.</string>
+
+    <string name="burgerfuel_chipotle_aioli_name">Chipotle Aioli</string>
+    <string name="burgerfuel_chipotle_aioli_description">Free Range BurgerFuel Chipotle Aioli.</string>
+
+    <string name="burgerfuel_vegan_aioli_name">Vegan Aioli</string>
+    <string name="burgerfuel_vegan_aioli_description">BurgerFuel Vegan Aioli.</string>
+
+    <string name="tomato_sauce_name">Tomato Sauce</string>
+    <string name="tomato_sauce_description">Tomato Sauce.</string>
+
+    <string name="specials_string">Specials</string>
+    <string name="nz_beef_string">NZ Beef</string>
+    <string name="chicken_string">Free Range Chicken</string>
+    <string name="plant_string">Plant-Powered</string>
+    <string name="minis_string">Minis</string>
+    <string name="sides_string">Sides</string>
+    <string name="drinks_string">Thickshakes &amp; Drinks</string>
+    <string name="kids_string">Kids Ink. Meals</string>
+    <string name="sauces_string">Sauces</string>
+
+    <string name="default_profile_name">John Doe</string>
+    <string name="settings">Settings</string>
+    <string name="contact">Contact</string>
+    <string name="allergy">Allergy</string>
+
+    <string name="allergen_info_title">ALLERGEN INFORMATION</string>
+    <string name="eating_w_allergies">EATING WITH ALLERGIES</string>
+    <string name="eating_w_allergies_info">For your safety, please make informed decisions when eating with allergies by referring to our Allergen Information Chart before you eat with us. Our menu contains several known allergens, and we cannot 100% guarantee against cross contamination. Click on the Allergen Information link below to learn more and we also highly recommend you inform staff if you have any allergies or specific dietary needs prior to ordering.</string>
+    <string name="gluten_free_title">GLUTEN FREE</string>
+    <string name="gluten_free_info">BurgerFuel offers a gluten free bun that is wheat free, soy free and dairy free. Some of our burgers can be made gluten free – just chat with our staff. Click on the Allergen Information link above to learn about what products contain gluten.</string>
+    <string name="vegan_vegetarian_title">VEGAN &amp; VEGETARIAN</string>
+    <string name="vegan_vegetarian_info">Our vegetarian and vegan patties are specially cooked on a separate surface, and we reckon our Plant-Powered offerings are so good they’ll make even your most carnivorous mates jealous. Click on the Allergen Information link above to learn about what products are vegan and vegetarian suitable.</string>
+    <string name="halal_title">HALAL</string>
+    <string name="halal_info">Please let our crew know if you are Halal and we’re happy to cook your favourite burger separately using fresh, clean utensils. Please be aware that our stores and food are not halal in the strictest sense as some products on our menu are not Halal certified and we cannot 100% guarantee against cross contamination with non-Halal products. Click on the Allergen Information link above to find out what products are Halal suitable.</string>
+    <string name="low_carb_title">LOW CARB</string>
+    <string name="low_carb_info">Living life in the low-carb zone? Order any gourmet burger as a Low-Carborator to ditch the buns for a double hit of fresh iceberg lettuce and salad ingredients. Turn your burger experience into a fresh turbo-salad-charged taste explosion.</string>
+
+    <string name="default_cart_string">Cart is currently empty.</string>
+    <string name="default_past_order_string">No past orders. Please login.</string>
 </resources>

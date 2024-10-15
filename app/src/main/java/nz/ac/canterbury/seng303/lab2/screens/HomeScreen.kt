@@ -46,6 +46,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -82,8 +83,8 @@ fun Home(
     } else {
         colorResource(id = R.color.black)
     }
-
-    val menuItems : List<MenuItem> = MenuItem.getMenuItems() /* Items for the scrollable grid for menu selection */
+    val context = LocalContext.current
+    val menuItems : List<MenuItem> = MenuItem.getMenuItems(context) /* Items for the scrollable grid for menu selection */
     val menuIcons : List<MenuIcon> = MenuIcon.getMenuIcons() /* Items for the scrollable row for filtering the menu */
     val menuUiState by menuViewModel.uiState.collectAsState() /* State of the menu. Changes on click of icon */
     val isClicked = remember { mutableStateOf(false) } /* Items default as not clicked on */

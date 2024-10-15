@@ -1,5 +1,6 @@
 package nz.ac.canterbury.seng303.lab2.models
 
+import android.content.Context
 import android.icu.util.Currency
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -26,14 +27,14 @@ class MenuItem(
     }
 
     companion object {
-        fun getMenuItems(): List<MenuItem> {
+        fun getMenuItems(context: Context): List<MenuItem> {
             return listOf(
                 MenuItem(
                     1,
                     1,
                     R.drawable.ranch_feed_combo,
-                    "Ranch Feed",
-                    "Ranch Wrangler burger, Spud Fries w Aioli & Classic Coke* (*or any Classic Soda from the Coca Cola 330ml glass bottle range.",
+                    context.getString(R.string.ranch_feed_name),
+                    context.getString(R.string.ranch_feed_description),
                     20.80,
                     setOf("Specials")
                 ),
@@ -42,8 +43,8 @@ class MenuItem(
                     2,
                     1,
                     R.drawable.rebel_feed_combo,
-                    "Rebel Feed",
-                    "The Iron Rebel, Spud Fries with Aioli and a Coke range product",
+                    context.getString(R.string.rebel_feed_name),
+                    context.getString(R.string.rebel_feed_description),
                     26.50,
                     setOf("Specials")
                 ),
@@ -52,8 +53,8 @@ class MenuItem(
                     3,
                     1,
                     R.drawable.ranch_wrangler_burger,
-                    "Ranch Wrangler",
-                    "Plan*t crispy Chick*n* patty, bread & butter pickles, vegan Ranch sauce, vegan Buffalo sauce, Tajin & Lime seasoning, mini wholemeal bun.",
+                    context.getString(R.string.ranch_wrangler_name),
+                    context.getString(R.string.ranch_wrangler_description),
                     13.90,
                     setOf("Specials", "Plant-Powered", "Minis")
                 ),
@@ -62,8 +63,8 @@ class MenuItem(
                     4,
                     1,
                     R.drawable.iron_rebel_burger,
-                    "Iron Rebel",
-                    "100% pure grass-fed NZ beef, smokey, slow cooked pulled beef, marinated in sticky BBQ sauce, melted cheddar, crispy lettuce, tomato, onion, free-range Aioli and a wholemeal bun. ",
+                    context.getString(R.string.iron_rebel_name),
+                    context.getString(R.string.iron_rebel_description),
                     21.50,
                     setOf("Specials", "NZ Beef")
                 ),
@@ -72,8 +73,8 @@ class MenuItem(
                     5,
                     1,
                     R.drawable.chev_brulee_drink,
-                    "Chev Brulee",
-                    " All natural BurgerFuel Whip blended with creamy custard and swirls of Crème Brûlée Syrup. *This shake contains custard, it cannot be made dairy-free. ",
+                    context.getString(R.string.chev_brulee_name),
+                    context.getString(R.string.chev_brulee_description),
                     9.50,
                     setOf("Specials")
                 ),
@@ -82,8 +83,8 @@ class MenuItem(
                     6,
                     1,
                     R.drawable.loaded_fries,
-                    "Loaded Off-Roader Fries",
-                    "Seared bacon bits, BBQ sauce, cheese sauce, BurgerFuel Aioli, crispy onions and Spud Fries ",
+                    context.getString(R.string.off_roader_fries_name),
+                    context.getString(R.string.off_roader_fries_description),
                     9.80,
                     setOf("Specials", "Sides")
                 ),
@@ -92,8 +93,8 @@ class MenuItem(
                     7,
                     1,
                     R.drawable.muscle_single,
-                    "American Muscle Single",
-                    "NZ beef, cheddar, bread and butter pickles, BurgerFuel mustard, relish and BurgerFuel Aioli.",
+                    context.getString(R.string.muscle_single_name),
+                    context.getString(R.string.muscle_single_description),
                     14.00,
                     setOf("NZ Beef")
                 ),
@@ -102,8 +103,8 @@ class MenuItem(
                     8,
                     1,
                     R.drawable.muscle_double,
-                    "American Muscle Double",
-                    "Double NZ beef, double cheddar, bread and butter pickles, BurgerFuel mustard, relish and BurgerFuel Aioli.",
+                    context.getString(R.string.muscle_double_name),
+                    context.getString(R.string.muscle_double_description),
                     19.50,
                     setOf("NZ Beef")
                 ),
@@ -112,8 +113,8 @@ class MenuItem(
                     9,
                     1,
                     R.drawable.c_n_cheese,
-                    "C N Cheese",
-                    "NZ beef, cheddar, truffle mascarpone, parmesan, salad, relish and BurgerFuel Aioli.",
+                    context.getString(R.string.c_n_cheese_name),
+                    context.getString(R.string.c_n_cheese_description),
                     16.00,
                     setOf("NZ Beef")
                 ),
@@ -122,8 +123,8 @@ class MenuItem(
                     10,
                     1,
                     R.drawable.bio_fuel,
-                    "Bio Fuel",
-                    "NZ beef, egg, grated beetroot w/chia, salad, relish and BurgerFuel Aioli.",
+                    context.getString(R.string.bio_fuel_name),
+                    context.getString(R.string.bio_fuel_description),
                     16.00,
                     setOf("NZ Beef")
                 ),
@@ -132,8 +133,8 @@ class MenuItem(
                     11,
                     1,
                     R.drawable.bastard,
-                    "Bastard",
-                    "NZ beef, cheddar, bacon, grated beetroot w/chia, pineapple, avocado, salad, relish and BurgerFuel Aioli.",
+                    context.getString(R.string.bastard_name),
+                    context.getString(R.string.bastard_description),
                     19.50,
                     setOf("NZ Beef")
                 ),
@@ -142,8 +143,8 @@ class MenuItem(
                     12,
                     1,
                     R.drawable.ford_freakout,
-                    "Ford Freakout",
-                    "NZ beef, bacon, avocado, salad, relish and BurgerFuel Aioli.",
+                    context.getString(R.string.ford_freakout_name),
+                    context.getString(R.string.ford_freakout_description),
                     16.60,
                     setOf("NZ Beef")
                 ),
@@ -152,8 +153,8 @@ class MenuItem(
                     13,
                     1,
                     R.drawable.bacon_bbq_roadster,
-                    "Bacon BBQ Roadster",
-                    "NZ beef, cheddar, bacon, battered onion rings, BBQ sauce, salad, relish and BurgerFuel Aioli.",
+                    context.getString(R.string.bbq_roadster_name),
+                    context.getString(R.string.bbq_roadster_description),
                     19.50,
                     setOf("NZ Beef")
                 ),
@@ -162,8 +163,8 @@ class MenuItem(
                     14,
                     1,
                     R.drawable.hamburgini_w_cheese,
-                    "Hamburgini with Cheese",
-                    "NZ beef, cheddar, pickles, relish and BurgerFuel Aioli on a mini wholemeal bun.",
+                    context.getString(R.string.hamburgini_name),
+                    context.getString(R.string.hamburgini_description),
                     8.90,
                     setOf("NZ Beef", "Minis")
                 ),
@@ -172,8 +173,8 @@ class MenuItem(
                     15,
                     1,
                     R.drawable.bacon_backfire,
-                    "Bacon Backfire",
-                    "Grilled chicken, bacon, brie, salad, relish and BurgerFuel Aioli.",
+                    context.getString(R.string.bacon_backfire_name),
+                    context.getString(R.string.bacon_backfire_description),
                     17.40,
                     setOf("Free Range Chicken")
                 ),
@@ -182,8 +183,8 @@ class MenuItem(
                     16,
                     1,
                     R.drawable.burnout,
-                    "Burnout",
-                    "Grilled chicken, bacon, avocado, blue cheese sauce, BurgerFuel mustard, salad, relish and BurgerFuel Aioli.",
+                    context.getString(R.string.burnout_name),
+                    context.getString(R.string.burnout_description),
                     17.60,
                     setOf("Free Range Chicken")
                 ),
@@ -192,8 +193,8 @@ class MenuItem(
                     17,
                     1,
                     R.drawable.modifried_thunderbird,
-                    "Modifried Thunderbird",
-                    "Crispy buttermilk free-range fried chicken with a jalapeño and corn crumb, sliced jalapeño, salad, relish and BurgerFuel Chipotle Aioli.",
+                    context.getString(R.string.thunderbird_name),
+                    context.getString(R.string.thunderbird_description),
                     17.40,
                     setOf("Free Range Chicken")
                 ),
@@ -202,8 +203,8 @@ class MenuItem(
                     18,
                     1,
                     R.drawable.chook_royale,
-                    "Modifried Thunderbird",
-                    "Grilled chicken tenderloins, seasoned with sea salt, garlic and rosemary, pineapple, salad, relish and BurgerFuel Aioli on a mini wholemeal bun.",
+                    context.getString(R.string.chook_royale_name),
+                    context.getString(R.string.chook_royale_description),
                     10.50,
                     setOf("Free Range Chicken", "Minis")
                 ),
@@ -212,8 +213,8 @@ class MenuItem(
                     19,
                     1,
                     R.drawable.v8_vegan,
-                    "V8 Vegan",
-                    "Crumbed pumpkin, carrot, chickpea & ginger bites, vegan cheddar, avocado, grated beetroot w/chia, salad, relish and BurgerFuel Vegan Aioli.",
+                    context.getString(R.string.v8_vegan_name),
+                    context.getString(R.string.v8_vegan_description),
                     15.90,
                     setOf("Plant-Powered")
                 ),
@@ -222,8 +223,8 @@ class MenuItem(
                     20,
                     1,
                     R.drawable.v_twin_vege,
-                    "V-Twin Vege",
-                    "Mushroom, kumara, chickpea & basil patty, vegetarian cheddar, truffle mascarpone, plum sauce, salad, relish and BurgerFuel Aioli *Remove mascarpone, switch to BurgerFuel Vegan Aioli & vegan cheddar to make it vegan.",
+                    context.getString(R.string.v_twin_vege_name),
+                    context.getString(R.string.v_twin_vege_description),
                     14.90,
                     setOf("Plant-Powered")
                 ),
@@ -232,8 +233,8 @@ class MenuItem(
                     21,
                     1,
                     R.drawable.spud_fries_aioli,
-                    "Spud Fries with Aioli",
-                    "Thick cut potato served with BurgerFuel Aioli.",
+                    context.getString(R.string.spud_fries_aioli_name),
+                    context.getString(R.string.spud_fries_aioli_description),
                     6.90,
                     setOf("Sides")
                 ),
@@ -242,8 +243,8 @@ class MenuItem(
                     22,
                     1,
                     R.drawable.kumara_fries_aioli,
-                    "Kumara Fries with Aioli",
-                    "Thick cut golden kūmara served with BurgerFuel Aioli.",
+                    context.getString(R.string.kumara_fries_aioli_name),
+                    context.getString(R.string.kumara_fries_aioli_description),
                     7.90,
                     setOf("Sides")
                 ),
@@ -252,8 +253,8 @@ class MenuItem(
                     23,
                     1,
                     R.drawable.smash_browns_aioli,
-                    "Smash Browns with Aioli",
-                    "Golden, crispy hash bites served with BurgerFuel Aioli.",
+                    context.getString(R.string.smash_browns_aioli_name),
+                    context.getString(R.string.smash_browns_aioli_description),
                     7.90,
                     setOf("Sides")
                 ),
@@ -262,8 +263,8 @@ class MenuItem(
                     24,
                     1,
                     R.drawable.choppers,
-                    "Choppers",
-                    "Crispy southern fried chicken pieces drizzled with Sriracha and BurgerFuel Aioli.",
+                    context.getString(R.string.choppers_name),
+                    context.getString(R.string.choppers_description),
                     12.90,
                     setOf("Sides")
                 ),
@@ -272,8 +273,8 @@ class MenuItem(
                     25,
                     1,
                     R.drawable.chicken_fenders,
-                    "Chicken Fenders",
-                    "4 or 6 grilled free range skinless chicken tenderloins, seasoned with sea salt, garlic and rosemary, served with BurgerFuel Lemon Aioli or Chipotle Aioli.",
+                    context.getString(R.string.chicken_fenders_name),
+                    context.getString(R.string.chicken_fenders_description),
                     10.90,
                     setOf("Sides")
                 ),
@@ -282,8 +283,8 @@ class MenuItem(
                     26,
                     1,
                     R.drawable.motobites,
-                    "Motobites",
-                    "Crumbed pumpkin, carrot, chickpea & ginger bites, served with BurgerFuel Lemon Aioli or Chipotle Aioli",
+                    context.getString(R.string.motobites_name),
+                    context.getString(R.string.motobites_description),
                     8.90,
                     setOf("Sides")
                 ),
@@ -292,8 +293,8 @@ class MenuItem(
                     27,
                     1,
                     R.drawable.thickshake,
-                    "Thickshake",
-                    "Milk thickshakes made with all-natural BurgerFuel Whip.",
+                    context.getString(R.string.thickshake_name),
+                    context.getString(R.string.thickshake_description),
                     8.70,
                     setOf("Thickshakes & Drinks")
                 ),
@@ -302,8 +303,8 @@ class MenuItem(
                     28,
                     1,
                     R.drawable.soy_thickshake,
-                    "Soy Thickshake",
-                    "Soy thickshakes made with soy ice cream",
+                    context.getString(R.string.soy_thickshake_name),
+                    context.getString(R.string.soy_thickshake_description),
                     9.70,
                     setOf("Thickshakes & Drinks")
                 ),
@@ -312,8 +313,8 @@ class MenuItem(
                     29,
                     1,
                     R.drawable.rescued_cherry_cola,
-                    "Cherry Cola",
-                    "A BurgerFuel & Citizen collab. Combines the dark, rich flavour of rescued Central Otago Cherries & rum wash (The by-product botanicals from making rum).",
+                    context.getString(R.string.rescued_cherry_cola_name),
+                    context.getString(R.string.rescued_cherry_cola_description),
                     5.70,
                     setOf("Thickshakes & Drinks")
                 ),
@@ -322,8 +323,8 @@ class MenuItem(
                     30,
                     1,
                     R.drawable.rescued_cherry_lemonade,
-                    "Cherry Lemonade",
-                    "A BurgerFuel & Citizen collab brings you a refreshing cherry pink lemonade. Every can saves 12 NZ cherries from going to waste.",
+                    context.getString(R.string.rescued_cherry_lemonade_name),
+                    context.getString(R.string.rescued_cherry_lemonade_description),
                     5.70,
                     setOf("Thickshakes & Drinks")
                 ),
@@ -332,8 +333,8 @@ class MenuItem(
                     31,
                     1,
                     R.drawable.rescued_orangeade,
-                    "Cherry Orangeade",
-                    "A BurgerFuel & Citizen collab brings you a refreshing orange lemonade. Every can saves 2 NZ oranges from going to waste.",
+                    context.getString(R.string.rescued_orangeade_name),
+                    context.getString(R.string.rescued_orangeade_description),
                     5.70,
                     setOf("Thickshakes & Drinks")
                 ),
@@ -342,8 +343,8 @@ class MenuItem(
                     32,
                     1,
                     R.drawable.coke_330ml,
-                    "Coke 330ml",
-                    "Coca-Cola 330ml",
+                    context.getString(R.string.coke_330ml_name),
+                    context.getString(R.string.coke_330ml_description),
                     5.00,
                     setOf("Thickshakes & Drinks")
                 ),
@@ -352,8 +353,8 @@ class MenuItem(
                     33,
                     1,
                     R.drawable.coke_zero_sugar_330ml,
-                    "Coke Zero Sugar 330ml",
-                    "Coca-Cola Zero Sugar 330ml",
+                    context.getString(R.string.coke_zero_sugar_330ml_name),
+                    context.getString(R.string.coke_zero_sugar_330ml_description),
                     5.00,
                     setOf("Thickshakes & Drinks")
                 ),
@@ -362,8 +363,8 @@ class MenuItem(
                     34,
                     1,
                     R.drawable.diet_coke_330ml,
-                    "Diet Coke 330ml",
-                    "Diet Coca-Cola 330ml",
+                    context.getString(R.string.diet_coke_330ml_name),
+                    context.getString(R.string.diet_coke_330ml_description),
                     5.00,
                     setOf("Thickshakes & Drinks")
                 ),
@@ -372,8 +373,8 @@ class MenuItem(
                     35,
                     1,
                     R.drawable.sprite_330ml,
-                    "Sprite 330ml",
-                    "Sprite 330ml",
+                    context.getString(R.string.sprite_330ml_name),
+                    context.getString(R.string.sprite_330ml_description),
                     5.00,
                     setOf("Thickshakes & Drinks")
                 ),
@@ -382,8 +383,8 @@ class MenuItem(
                     36,
                     1,
                     R.drawable.l_n_p_330ml,
-                    "L&P 330ml",
-                    "L&P 330ml",
+                    context.getString(R.string.l_n_p_330ml_name),
+                    context.getString(R.string.l_n_p_330ml_description),
                     5.00,
                     setOf("Thickshakes & Drinks")
                 ),
@@ -392,8 +393,8 @@ class MenuItem(
                     37,
                     1,
                     R.drawable.fanta_330ml,
-                    "Fanta 330ml",
-                    "Fanta 330ml",
+                    context.getString(R.string.fanta_330ml_name),
+                    context.getString(R.string.fanta_330ml_description),
                     5.00,
                     setOf("Thickshakes & Drinks")
                 ),
@@ -402,8 +403,8 @@ class MenuItem(
                     38,
                     1,
                     R.drawable.organic_apple_orange_mango,
-                    "mOst Oraganic Apple Orange & Mango",
-                    "Organic Apple Orange & Mango",
+                    context.getString(R.string.organic_apple_orange_mango_name),
+                    context.getString(R.string.organic_apple_orange_mango_description),
                     5.90,
                     setOf("Thickshakes & Drinks")
                 ),
@@ -412,8 +413,8 @@ class MenuItem(
                     39,
                     1,
                     R.drawable.organic_apple_feijoa,
-                    "mOst Oraganic Apple & Feijoa",
-                    "Oraganic Apple & Feijoa Juice",
+                    context.getString(R.string.organic_apple_feijoa_name),
+                    context.getString(R.string.organic_apple_feijoa_description),
                     5.90,
                     setOf("Thickshakes & Drinks")
                 ),
@@ -422,8 +423,8 @@ class MenuItem(
                     40,
                     1,
                     R.drawable.organic_apple_blackcurrant,
-                    "mOst Organic Apple & Blackcurrant",
-                    "mOst Organic Apple & Blackcurrant juice",
+                    context.getString(R.string.organic_apple_blackcurrant_name),
+                    context.getString(R.string.organic_apple_blackcurrant_description),
                     5.90,
                     setOf("Thickshakes & Drinks")
                 ),
@@ -432,8 +433,8 @@ class MenuItem(
                     41,
                     1,
                     R.drawable.kiwi_blue600ml,
-                    "Kiwi Blue 600ml",
-                    "Kiwi Blue 600ml",
+                    context.getString(R.string.kiwi_blue_600ml_name),
+                    context.getString(R.string.kiwi_blue_600ml_description),
                     5.70,
                     setOf("Thickshakes & Drinks")
                 ),
@@ -442,8 +443,8 @@ class MenuItem(
                     42,
                     1,
                     R.drawable.keri_kids_apple,
-                    "Keri Kids Apple 250ml",
-                    "Keri Kids Apple Juice",
+                    context.getString(R.string.keri_kids_apple_name),
+                    context.getString(R.string.keri_kids_apple_description),
                     3.00,
                     setOf("Thickshakes & Drinks")
                 ),
@@ -452,8 +453,8 @@ class MenuItem(
                     43,
                     1,
                     R.drawable.keri_kids_apple_blackcurrant,
-                    "Keri Kids Apple & Blackcurrant 250ml",
-                    "Keri Kids Apple & Blackcurrant",
+                    context.getString(R.string.keri_kids_apple_blackcurrant_name),
+                    context.getString(R.string.keri_kids_apple_blackcurrant_description),
                     3.00,
                     setOf("Thickshakes & Drinks")
                 ),
@@ -462,8 +463,8 @@ class MenuItem(
                     44,
                     1,
                     R.drawable.kids_ink_cheeseburger_meal,
-                    "Kids Ink. Cheeseburger Meal",
-                    "Kids Cheeseburger, spud fries with free range BurgerFuel Aioli or tomato sauce, and a small juice.",
+                    context.getString(R.string.kids_ink_cheeseburger_meal_name),
+                    context.getString(R.string.kids_ink_cheeseburger_meal_description),
                     13.50,
                     setOf("Kids Ink. Meals")
                 ),
@@ -472,8 +473,8 @@ class MenuItem(
                     45,
                     1,
                     R.drawable.kids_ink_mini_motobites_meal,
-                    "Kids Ink. Mini Motobites Meal",
-                    " Small Motobites, spud fries with free range BurgerFuel Aioli or tomato sauce, and a small juice.",
+                    context.getString(R.string.kids_ink_mini_motobites_meal_name),
+                    context.getString(R.string.kids_ink_mini_motobites_meal_description),
                     13.50,
                     setOf("Kids Ink. Meals")
                 ),
@@ -482,8 +483,8 @@ class MenuItem(
                     46,
                     1,
                     R.drawable.kids_ink_teeny_choppers_meal,
-                    "Kids Ink. Teeny Choppers Meal",
-                    "Small Choppers, spud fries with free range BurgerFuel Aioli or tomato sauce, and a small juice.",
+                    context.getString(R.string.kids_ink_teeny_choppers_meal_name),
+                    context.getString(R.string.kids_ink_teeny_choppers_meal_description),
                     13.50,
                     setOf("Kids Ink. Meals")
                 ),
@@ -492,8 +493,8 @@ class MenuItem(
                     47,
                     1,
                     R.drawable.aioli,
-                    "BurgerFuel Aioli",
-                    "Free Range BurgerFuel Aioli",
+                    context.getString(R.string.burgerfuel_aioli_name),
+                    context.getString(R.string.burgerfuel_aioli_description),
                     1.80,
                     setOf("Sauces")
                 ),
@@ -502,8 +503,8 @@ class MenuItem(
                     48,
                     1,
                     R.drawable.lemon_aioli,
-                    "BurgerFuel Lemon Aioli",
-                    "Free Range BurgerFuel Lemon Aioli",
+                    context.getString(R.string.burgerfuel_lemon_aioli_name),
+                    context.getString(R.string.burgerfuel_lemon_aioli_description),
                     1.80,
                     setOf("Sauces")
                 ),
@@ -512,8 +513,8 @@ class MenuItem(
                     49,
                     1,
                     R.drawable.chipotle_aioli,
-                    "BurgerFuel Chipotle Aioli",
-                    "Free Range BurgerFuel Chipotle Aioli",
+                    context.getString(R.string.burgerfuel_chipotle_aioli_name),
+                    context.getString(R.string.burgerfuel_chipotle_aioli_description),
                     1.80,
                     setOf("Sauces")
                 ),
@@ -522,8 +523,8 @@ class MenuItem(
                     50,
                     1,
                     R.drawable.vegan_aioli,
-                    "BurgerFuel Vegan Aioli",
-                    "BurgerFuel Vegan Aioli",
+                    context.getString(R.string.burgerfuel_vegan_aioli_name),
+                    context.getString(R.string.burgerfuel_vegan_aioli_description),
                     1.80,
                     setOf("Sauces")
                 ),
@@ -532,8 +533,8 @@ class MenuItem(
                     51,
                     1,
                     R.drawable.tomato_sauce,
-                    "Tomato Sauce",
-                    "Tomato Sauce",
+                    context.getString(R.string.tomato_sauce_name),
+                    context.getString(R.string.tomato_sauce_description),
                     1.80,
                     setOf("Sauces")
                 ),
