@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -45,11 +46,13 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
+import nz.ac.canterbury.seng303.lab2.R
 
 @Composable
 fun ContactScreen(
@@ -146,55 +149,60 @@ fun ContactScreen(
                 .fillMaxWidth()
                 .padding(4.dp)
                 .height(48.dp)
-                .clip(RoundedCornerShape(12.dp))
-                .background(gradientBrush)
+                .clip(RoundedCornerShape(12.dp)),
+            shape = RoundedCornerShape(corner = CornerSize(8.dp)),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = colorResource(id = R.color.burger_fuel_purple), /* Background color of the button */
+                contentColor = Color.White /* Color of the text in the button */
+            )
+//                .background(gradientBrush)
         ) {
             Text("Submit", fontSize = 16.sp)
         }
 
-        Text(
-            text = "Or",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center
-        )
+//        Text(
+//            text = "Or",
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(16.dp)
+//                .align(Alignment.CenterHorizontally),
+//            textAlign = TextAlign.Center
+//        )
 
         // Button UI with gradient background
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp)
-                .height(48.dp)
-                .background(
-                    brush = gradientBrush,
-                    shape = RoundedCornerShape(12.dp)
-                )
-                .clickable {
-                    // Intent to open a website
-                    val url = Uri.parse("https://www.burgerfuel.com/nz/contact-us")
-                    val browserSelectorIntent = Intent()
-                        .setAction(Intent.ACTION_VIEW)
-                        .addCategory(Intent.CATEGORY_BROWSABLE)
-                        .setData(Uri.parse("http:"))
-                    val targetIntent = Intent()
-                        .setAction(Intent.ACTION_VIEW)
-                        .addCategory(Intent.CATEGORY_BROWSABLE)
-                        .setData(url)
-
-                    targetIntent.selector = browserSelectorIntent
-
-                    context.startActivity(targetIntent)
-                },
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "Open BurgerFuel Website",
-                fontSize = 16.sp,
-                color = Color.White
-            )
-        }
+//        Box(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(4.dp)
+//                .height(48.dp)
+//                .background(
+//                    brush = gradientBrush,
+//                    shape = RoundedCornerShape(12.dp)
+//                )
+//                .clickable {
+//                    // Intent to open a website
+//                    val url = Uri.parse("https://www.burgerfuel.com/nz/contact-us")
+//                    val browserSelectorIntent = Intent()
+//                        .setAction(Intent.ACTION_VIEW)
+//                        .addCategory(Intent.CATEGORY_BROWSABLE)
+//                        .setData(Uri.parse("http:"))
+//                    val targetIntent = Intent()
+//                        .setAction(Intent.ACTION_VIEW)
+//                        .addCategory(Intent.CATEGORY_BROWSABLE)
+//                        .setData(url)
+//
+//                    targetIntent.selector = browserSelectorIntent
+//
+//                    context.startActivity(targetIntent)
+//                },
+//            contentAlignment = Alignment.Center
+//        ) {
+//            Text(
+//                text = "Open BurgerFuel Website",
+//                fontSize = 16.sp,
+//                color = Color.White
+//            )
+//        }
     }
 
 }

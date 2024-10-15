@@ -12,9 +12,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -84,6 +89,46 @@ fun ItemCart(
                     food = food, deleteFn = {id: Int -> cartView.deleteCartById(id) },
                     addFn = {id: Int -> cartView.addSingleCartItem(id)},
                     notificationHelper = notificationHelper)
+            }
+
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ElevatedButton( /* Button to add items to order */
+                        onClick = {
+                        },
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .width(140.dp),
+                        shape = RoundedCornerShape(corner = CornerSize(8.dp)), /* Changes how rounded the corners are for the Add button */
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colorResource(id = R.color.burger_fuel_purple), /* Background color of the button */
+                            contentColor = Color.White /* Color of the text in the button */
+                        )
+                    ) {
+                        Text(text = "CLEAR")
+                    }
+
+                    ElevatedButton( /* Button to add items to order */
+                        onClick = {
+                        },
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .width(140.dp),
+                        shape = RoundedCornerShape(corner = CornerSize(8.dp)), /* Changes how rounded the corners are for the Add button */
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colorResource(id = R.color.burger_fuel_purple), /* Background color of the button */
+                            contentColor = Color.White /* Color of the text in the button */
+                        )
+                    ) {
+                        Text(text = "ORDER")
+                    }
+
+                }
             }
         }
     }
