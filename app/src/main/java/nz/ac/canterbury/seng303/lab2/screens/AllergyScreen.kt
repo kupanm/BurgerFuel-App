@@ -34,22 +34,12 @@ import nz.ac.canterbury.seng303.lab2.R
 fun AllergyScreen(
     navController: NavController
 ){
-
-    val gradientBrush = Brush.linearGradient(
-        colors = listOf(
-            colorResource(id = R.color.burger_fuel_purple), // Purple Shade
-            colorResource(id = R.color.teal_500) // Blue Shade
-        ),
-        start = Offset(0f, 1000f),
-        end = Offset(1000f, 0f)
-    )
-
     val context = LocalContext.current
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(gradientBrush)
+            .background(color = colorResource(id = R.color.burger_fuel_purple))
             .padding(horizontal = 16.dp)
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
@@ -92,12 +82,14 @@ fun AllergyScreen(
                 .fillMaxWidth()
                 .padding(4.dp)
                 .height(48.dp)
-                .background(colorResource(id = R.color.teal_500),
+                .background(
+                    colorResource(id = R.color.teal_500),
                     shape = RoundedCornerShape(12.dp)
                 )
                 .clickable {
                     // Intent to open a website
-                    val url = Uri.parse("https://www.burgerfuel.com/uploads/media/66e377638b66e/allergen-dietary-suitability-chart-13-09-2024.pdf")
+                    val url =
+                        Uri.parse("https://www.burgerfuel.com/uploads/media/66e377638b66e/allergen-dietary-suitability-chart-13-09-2024.pdf")
                     val browserSelectorIntent = Intent()
                         .setAction(Intent.ACTION_VIEW)
                         .addCategory(Intent.CATEGORY_BROWSABLE)

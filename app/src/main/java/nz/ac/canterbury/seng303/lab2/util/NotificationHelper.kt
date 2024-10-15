@@ -32,11 +32,11 @@ class NotificationHelper(val context: Context) {
                 )
             } else {
                 // if permission already granted, proceed with notification
-                createNotification(notificationTitle = "Access Permitted", notificationDesc = "First Notifcation!")
+//                createNotification(notificationTitle = "Access Permitted", notificationDesc = "First Notifcation!")
             }
         } else {
             // For Android 12 or lower, permission is not required
-            createNotification(notificationTitle = "Access Permitted", notificationDesc = "First Notifcation!")
+//            createNotification(notificationTitle = "Access Permitted", notificationDesc = "First Notifcation!")
         }
     }
 

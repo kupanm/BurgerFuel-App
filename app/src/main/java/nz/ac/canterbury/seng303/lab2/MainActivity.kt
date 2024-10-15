@@ -86,7 +86,6 @@ import nz.ac.canterbury.seng303.lab2.ui.theme.Lab1Theme
 import nz.ac.canterbury.seng303.lab2.util.NotificationHelper
 import nz.ac.canterbury.seng303.lab2.viewmodels.CartViewModel
 import nz.ac.canterbury.seng303.lab2.viewmodels.MenuViewModel
-import nz.ac.canterbury.seng303.lab2.viewmodels.NoteViewModel
 import nz.ac.canterbury.seng303.lab2.viewmodels.SettingViewModel
 import android.content.pm.PackageManager
 import kotlin.math.roundToInt
@@ -237,7 +236,6 @@ class MainActivity : ComponentActivity() {
                                     navController = navController,
                                     cartViewModel = cartViewModel,
                                     settingViewModel = settingViewModel,
-                                    notificationHelper = notificationHelper
                                 )
                             }
                             composable("Locations") {

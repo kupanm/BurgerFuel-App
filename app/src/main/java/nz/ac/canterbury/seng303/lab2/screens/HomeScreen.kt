@@ -69,7 +69,6 @@ fun Home(
     cartViewModel: CartViewModel,
     menuViewModel: MenuViewModel = viewModel(),
     settingViewModel: SettingViewModel,
-    notificationHelper: NotificationHelper
 ) {
     val isDarkMode by settingViewModel.isDarkMode.collectAsState()
     val backgroundColor = if (isDarkMode) {
@@ -117,7 +116,6 @@ fun Home(
                         cartViewModel,
                         textColor,
                         backgroundColor,
-                        notificationHelper
                         )
                 }
             }
@@ -176,7 +174,6 @@ fun MenuItemCard(
     cartViewModel: CartViewModel,
     textColor: Color,
     backgroundColor: Color,
-    notificationHelper: NotificationHelper
 ) {
     var isClicked = remember { mutableStateOf(false) }
 
@@ -233,7 +230,6 @@ fun MenuItemCard(
                     cartViewModel.addItem(item)
                     val decimalFormat = DecimalFormat("#.00")
                     val formattedPrice = decimalFormat.format(item.price)
-                    notificationHelper.createNotification(notificationTitle = "Item Added To Cart", notificationDesc = "1x " + item.name + " $"+formattedPrice)
                           },
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
